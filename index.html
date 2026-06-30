@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNI Member Performance Dashboard</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+  <style>
+    /* Styling Tokens & Variables */
+    :root {
+      --font-sans: 'Inter', sans-serif;
+      --font-display: 'Outfit', sans-serif;
+
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 10px 15px -10px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] {
+      --bg-app: #FAF8F2;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-card-hover: #ffffff;
+      --border-color: #e8dfcb;
+      --border-glow: rgba(156, 124, 56, 0.15);
+      
+      --text-main: #3c321d;
+      --text-muted: #8e7544;
+      --text-inverse: #ffffff;
+      
+      --primary: #9c7c38;
+      --primary-hover: #85662a;
+      --primary-light: rgba(156, 124, 56, 0.08);
+      --secondary: #c29f53;
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.08);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.08);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.08);
+      
+      --table-hdr-bg: #f5edd6;
+      --table-row-odd: #fcfaf5;
+      --table-row-hover: #f0e8d0;
+      --glass-glow: rgba(156, 124, 56, 0.02);
+      
+      --input-bg: #ffffff;
+      --input-border: #dcd1b8;
+      --scrollbar-thumb: #c29f53;
+      --scrollbar-track: #FAF8F2;
+    }
+
+    [data-theme="dark"] {
+      --bg-app: #16130b;
+      --bg-surface: #201b10;
+      --bg-card: rgba(32, 27, 16, 0.85);
+      --bg-card-hover: #2b2416;
+      --border-color: #3c3320;
+      --border-glow: rgba(156, 124, 56, 0.25);
+      
+      --text-main: #f5eedc;
+      --text-muted: #b09562;
+      --text-inverse: #16130b;
+      
+      --primary: #d5b263;
+      --primary-hover: #ebd18c;
+      --primary-light: rgba(213, 178, 99, 0.15);
+      --secondary: #cda142;
+      --success: #22c55e;
+      --success-light: rgba(34, 197, 94, 0.15);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.15);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.15);
+      
+      --table-hdr-bg: #2b2416;
+      --table-row-odd: #1c180f;
+      --table-row-hover: #332b1a;
+      --glass-glow: rgba(213, 178, 99, 0.05);
+      
+      --input-bg: #1c180f;
+      --input-border: #52462c;
+      --scrollbar-thumb: #b09562;
+      --scrollbar-track: #16130b;
+    }
+
+    /* Reset and Core Layout */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: var(--radius-xs);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-normal), border-color var(--transition-normal);
+    }
+
+    .glass-card:hover {
+      background: var(--bg-card-hover);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-logo {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+    }
+
+    .nav-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(to right, var(--text-main), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Theme and Action Buttons */
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .icon-btn:hover {
+      background-color: var(--table-row-hover);
+      border-color: var(--text-muted);
+    }
+
+    /* Action Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+      outline: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--text-inverse);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-surface);
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--table-row-hover);
+      border-color: var(--text-muted);
+    }
+
+    .btn-danger {
+      background-color: var(--danger-light);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: var(--radius-xs);
+    }
+
+    /* Main Grid Structure */
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      padding: 24px 32px;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Sidebar Content */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Multi-file Drop Zone */
+    .drop-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      background-color: var(--bg-surface);
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+      box-shadow: 0 0 0 4px var(--border-glow);
+    }
+
+    .drop-zone-icon {
+      font-size: 2.2rem;
+      color: var(--primary);
+    }
+
+    .drop-zone-text {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .drop-zone-subtext {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    /* Uploaded Files Manager */
+    .uploaded-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .file-card {
+      padding: 12px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all var(--transition-fast);
+    }
+
+    .file-card:hover {
+      box-shadow: var(--shadow-sm);
+      border-color: var(--primary);
+    }
+
+    .file-card-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .file-card-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .file-card-count {
+      font-size: 0.7rem;
+      font-weight: 500;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 9999px;
+    }
+
+    .file-category-select {
+      width: 100%;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-main);
+      padding: 6px 28px 6px 12px;
+      border-radius: var(--radius-xs);
+      font-size: 0.8rem;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 14px;
+    }
+
+    /* KPI Stats Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-footer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    /* Tab Layout for Views */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      gap: 24px;
+    }
+
+    .tab-item {
+      padding: 12px 4px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-item:hover,
+    .tab-item.active {
+      color: var(--primary);
+    }
+
+    .tab-item.active {
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-panel {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tab-panel.active {
+      display: flex;
+    }
+
+    /* Master Table Styling */
+    .table-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 12px 8px 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      background-color: var(--bg-surface);
+      max-height: 60vh;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+      table-layout: fixed;
+    }
+
+    .custom-table th,
+    .custom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .custom-table th {
+      background-color: var(--table-hdr-bg);
+      color: var(--text-muted);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      user-select: none;
+      position: relative;
+    }
+
+    /* Sticky columns */
+    .custom-table th:first-child,
+    .custom-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 20;
+      background-color: var(--bg-surface);
+      border-right: 2px solid var(--border-color);
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.03);
+    }
+
+    .custom-table th:first-child {
+      background-color: var(--table-hdr-bg);
+      z-index: 30;
+    }
+
+    .custom-table tr:nth-child(even) td {
+      background-color: var(--table-row-odd);
+    }
+
+    .custom-table tr:hover td {
+      background-color: var(--table-row-hover);
+    }
+
+    .sort-icon {
+      margin-left: 4px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Column Resizer Handle */
+    .resizer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      cursor: col-resize;
+      user-select: none;
+    }
+
+    .resizer:hover,
+    .resizer.resizing {
+      background-color: var(--primary);
+    }
+
+    /* Table Column Filters */
+    .column-filter-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 4px;
+    }
+
+    .column-filter-input {
+      width: 100%;
+      font-size: 0.75rem;
+      padding: 2px 4px;
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-xs);
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    /* Pagination controls */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--bg-surface);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .pagination-pages {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Score badges */
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .score-high {
+      background-color: var(--success-light);
+      color: var(--success);
+    }
+
+    .score-med {
+      background-color: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .score-low {
+      background-color: var(--danger-light);
+      color: var(--danger);
+    }
+
+    /* Leaderboard Visuals */
+    .leaderboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    .leaderboard-card {
+      padding: 24px;
+    }
+
+    .leaderboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      gap: 16px;
+    }
+
+    .rank-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .rank-gold {
+      background: linear-gradient(135deg, #fcd34d, #f59e0b);
+      color: #78350f;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+
+    .rank-silver {
+      background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+      color: #334155;
+      box-shadow: 0 2px 8px rgba(148, 163, 184, 0.3);
+    }
+
+    .rank-bronze {
+      background: linear-gradient(135deg, #fed7aa, #ea580c);
+      color: #7c2d12;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+    }
+
+    .rank-other {
+      background-color: var(--table-hdr-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .leaderboard-details {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .leaderboard-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .leaderboard-score-val {
+      font-weight: 800;
+      color: var(--primary);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+    }
+
+    /* Charts Container */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .chart-card {
+      padding: 20px;
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-card-full {
+      grid-column: span 2;
+    }
+
+    /* Toast Notification System */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .toast {
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateY(100px);
+      opacity: 0;
+      animation: toastIn 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s;
+    }
+
+    @keyframes toastIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .toast-success {
+      background-color: var(--success);
+    }
+
+    .toast-error {
+      background-color: var(--danger);
+    }
+
+    .toast-warning {
+      background-color: var(--warning);
+    }
+
+    .toast-info {
+      background-color: var(--primary);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-card-full {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .dashboard-container {
+        padding: 16px;
+      }
+    }
+
+    /* Print styling overrides */
+    @media print {
+      body {
+        background-color: white;
+        color: black;
+      }
+
+      .navbar,
+      .sidebar,
+      .tab-bar,
+      .table-controls,
+      .pagination-bar,
+      .toast-container {
+        display: none !important;
+      }
+
+      .dashboard-container {
+        grid-template-columns: 1fr;
+        padding: 0;
+        margin: 0;
+      }
+
+      .tab-panel {
+        display: flex !important;
+      }
+
+      .table-container {
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+        max-height: none;
+      }
+
+      .custom-table {
+        table-layout: auto;
+      }
+
+      .custom-table th,
+      .custom-table td {
+        border-bottom: 1px solid #000;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+      }
+
+      .custom-table th:first-child,
+      .custom-table td:first-child {
+        position: static;
+        border-right: none;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+        page-break-before: always;
+      }
+
+      .chart-card {
+        height: 350px;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="nav-logo"><i class="fa-solid fa-award"></i></div>
+      <div class="nav-title">Member Performance Dashboard</div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Reset button -->
+      <button class="btn btn-danger btn-sm" onclick="resetDatabase()" title="Clear all loaded files and resets data">
+        <i class="fa-solid fa-trash-can"></i> Reset Database
+      </button>
+
+      <!-- Theme Switcher -->
+      <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+        <i id="themeIcon" class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="dashboard-container">
+
+    <!-- Sidebar: Configuration & Uploads -->
+    <aside class="sidebar">
+
+      <!-- Multi-file Upload Card -->
+      <section class="glass-card" style="padding: 20px;">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cloud-arrow-up" style="color: var(--primary);"></i>
+          Upload Center
+        </h2>
+
+        <div class="drop-zone" id="dropZone" onclick="triggerFileInput()">
+          <i class="fa-solid fa-file-arrow-up drop-zone-icon"></i>
+          <span class="drop-zone-text">Drag & Drop files here or click to browse</span>
+          <span class="drop-zone-subtext">Supports CSV, XLS, XLSX</span>
+          <input type="file" id="fileInput" class="file-input" accept=".csv, .xls, .xlsx" multiple
+            onchange="handleFilesSelected(this.files)">
+        </div>
+      </section>
+
+      <!-- Uploaded Files Manager -->
+      <section class="glass-card" style="padding: 20px;">
+        <h2 class="section-title">
+          <i class="fa-solid fa-folder-open" style="color: var(--secondary);"></i>
+          Active Data Sheets
+        </h2>
+        <div class="uploaded-list" id="uploadedList">
+          <!-- Populated dynamically with file cards -->
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px 0;">
+            No sheets uploaded yet.
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- KPI stats card row -->
+      <div class="kpi-row" id="kpiStatsRow">
+        <!-- Generates KPI Cards Dynamically -->
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="tab-bar">
+        <div class="tab-item active" onclick="switchTab('leaderboardTab', this)">
+          <i class="fa-solid fa-ranking-star"></i> Leaderboard
+        </div>
+        <div class="tab-item" onclick="switchTab('tableTab', this)">
+          <i class="fa-solid fa-table-list"></i> Master Table
+        </div>
+        <div class="tab-item" onclick="switchTab('chartsTab', this)">
+          <i class="fa-solid fa-chart-pie"></i> Visual Analytics
+        </div>
+      </nav>
+
+      <!-- Tab Panels -->
+
+      <!-- TAB 1: Leaderboard View -->
+      <div id="leaderboardTab" class="tab-panel active">
+        <div class="leaderboard-grid">
+          <div class="glass-card leaderboard-card">
+            <div class="leaderboard-header">
+              <h3 class="section-title" style="margin-bottom: 0;">
+                <i class="fa-solid fa-medal" style="color: #fcd34d;"></i>
+                Rankings
+              </h3>
+              <span class="selector-label" style="font-size:0.75rem;">Sorted by Total Score</span>
+            </div>
+
+            <div class="leaderboard-list" id="leaderboardList">
+              <div style="text-align: center; color: var(--text-muted); padding: 32px 0;">
+                Upload spreadsheets to populate the leaderboard.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Master Table View -->
+      <div id="tableTab" class="tab-panel">
+        <div class="table-controls">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="tableSearch" class="search-input" placeholder="Search members..."
+              oninput="triggerSearch(this.value)">
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary" onclick="resetFilters()" title="Clear all column filters and searches">
+              <i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters
+            </button>
+            <button class="btn btn-secondary" onclick="exportData('csv')">
+              <i class="fa-solid fa-file-csv"></i> CSV
+            </button>
+            <button class="btn btn-secondary" onclick="exportData('excel')">
+              <i class="fa-solid fa-file-excel"></i> Excel
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+              <i class="fa-solid fa-print"></i> Print / PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="custom-table" id="masterTable">
+            <thead>
+              <tr id="tableHeaders">
+                <!-- Headers with sorting controls, resizer, and filtering generated dynamically -->
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr>
+                <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 32px;">No members loaded.
+                  Upload spreadsheets to begin.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination-bar">
+            <div>
+              Show
+              <select id="pageSizeSelect" class="custom-select btn-sm"
+                style="min-width: 60px; padding: 4px 24px 4px 8px; border: 1px solid var(--border-color); border-radius: var(--radius-xs); background-color: var(--input-bg); color: var(--text-main);"
+                onchange="changePageSize(this.value)">
+                <option value="10">10</option>
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              members per page
+            </div>
+            <div class="pagination-pages">
+              <button class="icon-btn" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i></button>
+              <span id="pageIndicator">Page 1 of 1</span>
+              <button class="icon-btn" onclick="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Visual Analytics View -->
+      <div id="chartsTab" class="tab-panel">
+        <div class="charts-grid">
+
+          <div class="glass-card chart-card">
+            <h3>Attendance Breakdown</h3>
+            <div id="chartAttendance" class="chart-container"></div>
+          </div>
+
+          <div class="glass-card chart-card">
+            <h3>Score Distribution</h3>
+            <div id="chartScoreDist" class="chart-container"></div>
+          </div>
+
+          <div class="glass-card chart-card chart-card-full">
+            <h3>Top 10 Contribution Scores</h3>
+            <div id="chartTopPerformers" class="chart-container"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script>
+    // Constants for Category Mappings
+    const CATEGORIES = {
+      master: 'Master Member List',
+      kyt: 'KYT Done',
+      attendance: 'Attendance',
+      referrals: 'Referrals Given',
+      business: 'Business Given',
+      inductions: 'Inductions',
+      visitors: 'Visitors / VIP / Observer',
+      testimonials: 'Testimonials',
+      bbp: 'BBP Score'
+    };
+
+    // Global State Container
+    let state = {
+      theme: 'light',
+      uploadedFiles: [], // Array of { id, name, category, count, headers: [], rows: [] }
+      members: [],       // Consolidated rows
+      tableSettings: {
+        searchQuery: '',
+        sortBy: 'score',
+        sortOrder: 'desc',
+        pageSize: 25,
+        currentPage: 1,
+        columnFilters: {},
+        columnWidths: {}
+      }
+    };
+
+    // Initialize Dashboard
+    window.addEventListener('DOMContentLoaded', () => {
+      loadTheme();
+      loadStateFromStorage();
+      setupDragAndDrop();
+      initTableResizeHandlers();
+      consolidateAndScore();
+    });
+
+    // Theme Handlers
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('bni_leaderboard_theme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function setTheme(theme) {
+      state.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('bni_leaderboard_theme', theme);
+
+      const themeIcon = document.getElementById('themeIcon');
+      if (theme === 'dark') {
+        themeIcon.className = 'fa-solid fa-sun';
+      } else {
+        themeIcon.className = 'fa-solid fa-moon';
+      }
+
+      if (state.members.length > 0) {
+        renderCharts();
+      }
+    }
+
+    function toggleTheme() {
+      setTheme(state.theme === 'light' ? 'dark' : 'light');
+    }
+
+    // Toast Alerts
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+
+      let icon = 'fa-info-circle';
+      if (type === 'success') icon = 'fa-circle-check';
+      if (type === 'error') icon = 'fa-circle-exclamation';
+      if (type === 'warning') icon = 'fa-triangle-exclamation';
+
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transform = 'translateY(-100px)';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Save and Load State
+    function loadStateFromStorage() {
+      const savedState = localStorage.getItem('bni_leaderboard_state');
+      if (savedState) {
+        try {
+          const parsed = JSON.parse(savedState);
+          state.uploadedFiles = parsed.uploadedFiles || [];
+        } catch (e) {
+          console.error("Error parsing saved state", e);
+        }
+      }
+    }
+
+    function saveStateToStorage() {
+      const payload = {
+        uploadedFiles: state.uploadedFiles
+      };
+      localStorage.setItem('bni_leaderboard_state', JSON.stringify(payload));
+    }
+
+    function triggerFileInput() {
+      document.getElementById('fileInput').click();
+    }
+
+    // Drag and Drop Setups
+    function setupDragAndDrop() {
+      const dropZone = document.getElementById('dropZone');
+
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      });
+
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+          handleFilesSelected(e.dataTransfer.files);
+        }
+      });
+    }
+
+    // Handle uploaded files
+    function handleFilesSelected(fileList) {
+      if (fileList.length === 0) return;
+
+      let filesLoaded = 0;
+      const targetCount = fileList.length;
+
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const ext = file.name.split('.').pop().toLowerCase();
+        const reader = new FileReader();
+
+        if (ext === 'csv') {
+          Papa.parse(file, {
+            header: false,
+            skipEmptyLines: true,
+            complete: (results) => {
+              processRawRows(file.name, results.data);
+              filesLoaded++;
+              if (filesLoaded === targetCount) {
+                consolidateAndScore();
+              }
+            },
+            error: (err) => {
+              showToast(`Error parsing ${file.name}: ${err.message}`, 'error');
+              filesLoaded++;
+              if (filesLoaded === targetCount) {
+                consolidateAndScore();
+              }
+            }
+          });
+        } else if (ext === 'xlsx' || ext === 'xls') {
+          reader.onload = (e) => {
+            try {
+              const data = new Uint8Array(e.target.result);
+              const workbook = XLSX.read(data, { type: 'array' });
+              const firstSheetName = workbook.SheetNames[0];
+              const worksheet = workbook.Sheets[firstSheetName];
+              const json = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+              processRawRows(file.name, json);
+            } catch (err) {
+              showToast(`Error parsing ${file.name}: ${err.message}`, 'error');
+            }
+            filesLoaded++;
+            if (filesLoaded === targetCount) {
+              consolidateAndScore();
+            }
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          showToast(`Unsupported file type: ${file.name}`, 'warning');
+          filesLoaded++;
+          if (filesLoaded === targetCount) {
+            consolidateAndScore();
+          }
+        }
+      }
+
+      // Clear input so same files can be re-selected
+      document.getElementById('fileInput').value = '';
+    }
+
+    // Process raw 2D array representation
+    function processRawRows(filename, rows) {
+      if (!rows || rows.length === 0) {
+        showToast(`File "${filename}" has no readable rows.`, 'warning');
+        return;
+      }
+
+      // Filter empty rows
+      const cleanRows = rows.filter(r => r && r.length > 0 && r.some(cell => String(cell).trim() !== ''));
+      if (cleanRows.length === 0) {
+        showToast(`File "${filename}" contains only empty cells.`, 'warning');
+        return;
+      }
+
+      // 1. Column detection
+      let nameIndex = 0;
+      let headerRowIndex = 0;
+
+      // Find first header row containing keywords
+      for (let i = 0; i < Math.min(5, cleanRows.length); i++) {
+        const row = cleanRows[i];
+        const hasName = row.some(cell => {
+          const s = String(cell).toLowerCase();
+          return s.includes('name') || s.includes('member') || s.includes('participant') || s.includes('user');
+        });
+        if (hasName) {
+          headerRowIndex = i;
+          break;
+        }
+      }
+
+      const headers = cleanRows[headerRowIndex].map(h => String(h || '').trim());
+      const headersLower = headers.map(h => h.toLowerCase());
+
+      // Match name index
+      const nameCol = headersLower.findIndex(h => h.includes('name') || h.includes('member') || h.includes('participant') || h.includes('user'));
+      if (nameCol !== -1) nameIndex = nameCol;
+
+      // 2. Extract Data Rows
+      const dataset = [];
+      const startRow = headerRowIndex + 1;
+
+      for (let r = startRow; r < cleanRows.length; r++) {
+        const row = cleanRows[r];
+        const nameVal = row[nameIndex];
+
+        if (nameVal && String(nameVal).trim()) {
+          const record = {
+            rawName: String(nameVal).trim()
+          };
+          headers.forEach((h, idx) => {
+            if (idx !== nameIndex && h) {
+              record[h] = row[idx] !== undefined ? row[idx] : '';
+            }
+          });
+          dataset.push(record);
+        }
+      }
+
+      // 3. Category Auto-Detection
+      const category = detectCategoryFromHeaders(headersLower, filename);
+
+      // Create new uploaded file entry
+      const fileId = 'file_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+      state.uploadedFiles.push({
+        id: fileId,
+        name: filename,
+        category: category,
+        count: dataset.length,
+        headers: headers,
+        rows: dataset
+      });
+
+      showToast(`Loaded "${filename}" (${dataset.length} records)`, 'success');
+    }
+
+    function detectCategoryFromHeaders(headers, filename) {
+      const hStr = headers.join(' ');
+      const fStr = filename.toLowerCase();
+
+      if (hStr.includes('attendance') || fStr.includes('attendance') || hStr.includes('presence')) return 'attendance';
+      if (hStr.includes('kyt') || fStr.includes('kyt') || hStr.includes('know your team')) return 'kyt';
+      if (hStr.includes('referral') || fStr.includes('referral') || fStr.includes('referrals')) return 'referrals';
+
+      if (hStr.includes('business') || fStr.includes('business') || fStr.includes('revenue') || fStr.includes('given') || hStr.includes('given') || fStr.includes('value')) return 'business';
+      if (hStr.includes('induction') || fStr.includes('induction') || fStr.includes('inductions')) return 'inductions';
+      if (hStr.includes('visitor') || hStr.includes('vip') || hStr.includes('observer') || fStr.includes('visitor') || fStr.includes('vip') || fStr.includes('observer')) return 'visitors';
+      if (hStr.includes('testimonial') || fStr.includes('testimonial') || fStr.includes('testimonials')) return 'testimonials';
+      if (hStr.includes('bbp') || fStr.includes('bbp') || hStr.includes('score')) return 'bbp';
+      if (hStr.includes('master') || fStr.includes('master') || hStr.includes('member list') || fStr.includes('member') || fStr.includes('members') || fStr.includes('roster')) return 'master';
+
+      return 'master'; // Fallback
+    }
+
+    // Name Normalization and Matching Algorithm
+    function normalizeName(name) {
+      if (!name) return '';
+      return name.toString().toLowerCase().trim().replace(/[^a-z0-9\s]/g, '');
+    }
+
+    // Jaro-Winkler Similarity
+    function jaroWinkler(s1, s2) {
+      s1 = normalizeName(s1);
+      s2 = normalizeName(s2);
+      if (s1 === s2) return 1.0;
+      if (s1.length === 0 || s2.length === 0) return 0.0;
+
+      const matchWindow = Math.floor(Math.max(s1.length, s2.length) / 2) - 1;
+      const s1Matches = new Array(s1.length).fill(false);
+      const s2Matches = new Array(s2.length).fill(false);
+
+      let matches = 0;
+      let transpositions = 0;
+
+      for (let i = 0; i < s1.length; i++) {
+        const start = Math.max(0, i - matchWindow);
+        const end = Math.min(s2.length - 1, i + matchWindow);
+
+        for (let j = start; j <= end; j++) {
+          if (!s2Matches[j] && s1[i] === s2[j]) {
+            s1Matches[i] = true;
+            s2Matches[j] = true;
+            matches++;
+            break;
+          }
+        }
+      }
+
+      if (matches === 0) return 0.0;
+
+      let k = 0;
+      for (let i = 0; i < s1.length; i++) {
+        if (s1Matches[i]) {
+          while (!s2Matches[k]) k++;
+          if (s1[i] !== s2[k]) transpositions++;
+          k++;
+        }
+      }
+
+      const jaro = (matches / s1.length + matches / s2.length + (matches - transpositions / 2) / matches) / 3.0;
+
+      let prefix = 0;
+      for (let i = 0; i < Math.min(4, s1.length, s2.length); i++) {
+        if (s1[i] === s2[i]) prefix++;
+        else break;
+      }
+
+      return jaro + prefix * 0.1 * (1.0 - jaro);
+    }
+
+    function findBestMemberMatch(rawName, existingMembers) {
+      if (!rawName) return null;
+      const normRaw = normalizeName(rawName);
+      if (!normRaw) return null;
+
+      // Exact match
+      const exactMatch = existingMembers.find(m => normalizeName(m) === normRaw);
+      if (exactMatch) return exactMatch;
+
+      // JW Match
+      let bestMatch = null;
+      let highestScore = 0;
+
+      existingMembers.forEach(member => {
+        const score = jaroWinkler(rawName, member);
+        if (score > highestScore) {
+          highestScore = score;
+          bestMatch = member;
+        }
+      });
+
+      if (highestScore >= 0.85) {
+        return bestMatch;
+      }
+
+      // Token intersection fallback
+      const tokensRaw = normRaw.split(/\s+/).filter(t => t.length > 1);
+      for (const member of existingMembers) {
+        const tokensMember = normalizeName(member).split(/\s+/).filter(t => t.length > 1);
+        const common = tokensRaw.filter(t => tokensMember.includes(t));
+        if (common.length > 0 && Math.max(...common.map(t => t.length)) >= 3) {
+          return member;
+        }
+      }
+
+      return null;
+    }
+
+    // Consolidated datasets and scoring
+    function consolidateAndScore() {
+      // 1. Collect all member names
+      let masterNames = [];
+      const masterFiles = state.uploadedFiles.filter(f => f.category === 'master');
+
+      if (masterFiles.length > 0) {
+        // Collect names from master list
+        const nameSet = new Set();
+        masterFiles.forEach(file => {
+          file.rows.forEach(r => nameSet.add(r.rawName));
+        });
+        masterNames = Array.from(nameSet);
+      } else {
+        // Collect names dynamically from all files
+        const nameSet = new Set();
+        state.uploadedFiles.forEach(file => {
+          file.rows.forEach(r => nameSet.add(r.rawName));
+        });
+        masterNames = Array.from(nameSet);
+      }
+
+      // Normalize master list to prevent duplicate names in final rendering
+      const uniqueNames = [];
+      masterNames.forEach(name => {
+        const matched = findBestMemberMatch(name, uniqueNames);
+        if (!matched) {
+          uniqueNames.push(name);
+        }
+      });
+
+      // 2. Initialize records
+      const merged = uniqueNames.map(name => {
+        return {
+          name: name,
+          kyt: 0,
+          attendance: '',
+          referrals: 0,
+          business: 0,
+          inductions: 0,
+          visitors: 0,
+          testimonials: 0,
+          bbp: 0,
+          score: 0
+        };
+      });
+
+      // 3. Populate metrics from active files
+      state.uploadedFiles.forEach(file => {
+        file.rows.forEach(row => {
+          const matchedName = findBestMemberMatch(row.rawName, uniqueNames);
+          if (!matchedName) return;
+
+          const record = merged.find(m => m.name === matchedName);
+          if (!record) return;
+
+          // Find the value columns
+          const valKeys = Object.keys(row).filter(k => k !== 'rawName');
+
+          if (file.category === 'attendance') {
+            const statusKey = valKeys.find(k => k.toLowerCase().includes('attendance') || k.toLowerCase().includes('status') || k.toLowerCase().includes('present') || k.toLowerCase().includes('value')) || valKeys[0];
+            if (statusKey) {
+              const status = String(row[statusKey]).trim().toUpperCase();
+              if (['P', 'L', 'S', 'A', 'PRESENT', 'LATE', 'SUBSTITUTE', 'ABSENT'].includes(status)) {
+                // Shorten status representation
+                if (status.startsWith('P')) record.attendance = 'P';
+                else if (status.startsWith('L')) record.attendance = 'L';
+                else if (status.startsWith('S')) record.attendance = 'S';
+                else if (status.startsWith('A')) record.attendance = 'A';
+              }
+            }
+          } else if (file.category === 'kyt') {
+            const valKey = valKeys.find(k => k.toLowerCase().includes('kyt') || k.toLowerCase().includes('done') || k.toLowerCase().includes('count')) || valKeys[0];
+            const parsedVal = row[valKey];
+            if (parsedVal !== undefined && parsedVal !== null && parsedVal !== '') {
+              const num = parseFloat(parsedVal);
+              record.kyt = isNaN(num) ? parsedVal : num;
+            } else {
+              record.kyt = 0;
+            }
+          } else if (file.category === 'visitors') {
+            // Visitors, VIPs, and Observers combined
+            let sum = 0;
+            valKeys.forEach(k => {
+              const nameLower = k.toLowerCase();
+              if (nameLower.includes('visitor') || nameLower.includes('vip') || nameLower.includes('observer') || nameLower.includes('count')) {
+                sum += parseFloat(row[k]) || 0;
+              }
+            });
+            if (sum === 0 && valKeys.length > 0) {
+              sum = parseFloat(row[valKeys[0]]) || 0;
+            }
+            record.visitors += sum;
+          } else {
+            // standard numeric categories
+            const valKey = valKeys.find(k => k.toLowerCase().includes('score') || k.toLowerCase().includes('points') || k.toLowerCase().includes('count') || k.toLowerCase().includes('value') || k.toLowerCase().includes('total') || k.toLowerCase().includes('given')) || valKeys[0];
+            if (valKey) {
+              const val = parseFloat(String(row[valKey]).replace(/[$,\s]/g, '')) || 0;
+              if (file.category === 'referrals') record.referrals += val;
+              else if (file.category === 'business') record.business += val;
+              else if (file.category === 'inductions') record.inductions += val;
+              else if (file.category === 'testimonials') record.testimonials += val;
+              else if (file.category === 'bbp') record.bbp = Math.max(record.bbp, val); // BBP score typically takes the latest/max
+            }
+          }
+        });
+      });
+
+      // 4. Score Computation Engine
+      merged.forEach(member => {
+        let score = 0;
+
+        // KYT Done -> +10
+        const kytStr = String(member.kyt).toLowerCase();
+        if ((typeof member.kyt === 'number' && member.kyt > 0) || kytStr.includes('yes') || kytStr.includes('done') || kytStr === '1') {
+          score += 10;
+        }
+
+        // Attendance: P (+10), L (-5), S (+5)
+        if (member.attendance === 'P') score += 10;
+        else if (member.attendance === 'L') score -= 5;
+        else if (member.attendance === 'S') score += 5;
+
+        // Referrals > 0 -> +10
+        if (member.referrals > 0) score += 10;
+
+        // Business > 0 -> +20
+        if (member.business > 0) score += 20;
+
+        // Inductions > 0 -> +20
+        if (member.inductions > 0) score += 20;
+
+        // Visitors > 0 -> +10
+        if (member.visitors > 0) score += 10;
+
+        // Testimonials > 0 -> +10
+        if (member.testimonials > 0) score += 10;
+
+        // BBP Score -> multiply by 2
+        score += (member.bbp * 2);
+
+        member.score = score;
+      });
+
+      state.members = merged;
+
+      // Update UI Panels
+      renderUploadedFilesList();
+      renderKPIStats();
+      renderMasterTable();
+      renderLeaderboard();
+      renderCharts();
+      saveStateToStorage();
+    }
+
+    // Render active sheets manager list
+    function renderUploadedFilesList() {
+      const container = document.getElementById('uploadedList');
+      container.innerHTML = '';
+
+      if (state.uploadedFiles.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px 0;">
+            No sheets uploaded yet.
+          </div>
+        `;
+        return;
+      }
+
+      state.uploadedFiles.forEach(file => {
+        const card = document.createElement('div');
+        card.className = 'file-card';
+
+        let optionsHtml = '';
+        Object.keys(CATEGORIES).forEach(key => {
+          const selected = file.category === key ? 'selected' : '';
+          optionsHtml += `<option value="${key}" ${selected}>${CATEGORIES[key]}</option>`;
+        });
+
+        card.innerHTML = `
+          <div class="file-card-hdr">
+            <span class="file-card-name" title="${file.name}">${file.name}</span>
+            <span class="file-card-count">${file.count} rows</span>
+            <button class="icon-btn btn-sm text-danger" style="width:24px; height:24px; border:none;" onclick="deleteFile('${file.id}')" title="Remove sheet">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+          <div>
+            <select class="file-category-select" onchange="changeFileCategory('${file.id}', this.value)">
+              ${optionsHtml}
+            </select>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function changeFileCategory(fileId, newCategory) {
+      const file = state.uploadedFiles.find(f => f.id === fileId);
+      if (file) {
+        file.category = newCategory;
+        showToast(`Category updated to: ${CATEGORIES[newCategory]}`, 'info');
+        consolidateAndScore();
+      }
+    }
+
+    function deleteFile(fileId) {
+      state.uploadedFiles = state.uploadedFiles.filter(f => f.id !== fileId);
+      showToast("Sheet removed", "info");
+      consolidateAndScore();
+    }
+
+    function resetDatabase() {
+      if (confirm("Are you sure you want to clear all uploaded data files? This will reset the dashboard database.")) {
+        state.uploadedFiles = [];
+        state.members = [];
+        consolidateAndScore();
+        showToast("Database successfully reset", "warning");
+      }
+    }
+
+    // Render stats KPIs
+    function renderKPIStats() {
+      const container = document.getElementById('kpiStatsRow');
+      const members = state.members;
+
+      if (members.length === 0) {
+        container.innerHTML = `
+          <div class="glass-card kpi-card"><span class="kpi-title">Total Members</span><span class="kpi-value">0</span></div>
+          <div class="glass-card kpi-card"><span class="kpi-title">Green Members (60+)</span><span class="kpi-value">0</span></div>
+          <div class="glass-card kpi-card"><span class="kpi-title">Attendance</span><span class="kpi-value">0</span></div>
+          <div class="glass-card kpi-card"><span class="kpi-title">Red Members (&lt; 30)</span><span class="kpi-value">0</span></div>
+        `;
+        return;
+      }
+
+      const totalMembers = members.length;
+      let presentCount = 0;
+      let absentCount = 0;
+      let greenCount = 0;
+      let redCount = 0;
+
+      members.forEach(m => {
+        if (m.score >= 60) greenCount++;
+        if (m.score < 30) redCount++;
+
+        if (m.attendance === 'P') presentCount++;
+        else if (m.attendance === 'A') absentCount++;
+      });
+
+      container.innerHTML = `
+        <div class="glass-card kpi-card">
+          <span class="kpi-title">Total Members</span>
+          <span class="kpi-value">${totalMembers}</span>
+          <span class="kpi-footer"><i class="fa-solid fa-users"></i> Master List</span>
+        </div>
+        <div class="glass-card kpi-card">
+          <span class="kpi-title">Green Members (60+)</span>
+          <span class="kpi-value" style="color: var(--success);">${greenCount}</span>
+          <span class="kpi-footer"><i class="fa-solid fa-circle" style="color: var(--success);"></i> Score &gt;= 60</span>
+        </div>
+        <div class="glass-card kpi-card">
+          <span class="kpi-title">Attendance</span>
+          <span class="kpi-value">${presentCount} <span style="font-size:1rem; color:var(--text-muted);">/ ${absentCount} abs</span></span>
+          <span class="kpi-footer"><i class="fa-solid fa-user-check"></i> Present / Absent</span>
+        </div>
+        <div class="glass-card kpi-card">
+          <span class="kpi-title">Red Members (&lt; 30)</span>
+          <span class="kpi-value" style="color: var(--danger);">${redCount}</span>
+          <span class="kpi-footer"><i class="fa-solid fa-circle" style="color: var(--danger);"></i> Score &lt; 30</span>
+        </div>
+      `;
+    }
+
+    // Render Master Table
+    function renderMasterTable() {
+      // Save focus
+      const activeEl = document.activeElement;
+      let focusedColKey = null;
+      let selectionStart = 0;
+      let selectionEnd = 0;
+      if (activeEl && activeEl.classList.contains('column-filter-input')) {
+        const th = activeEl.closest('th');
+        if (th) {
+          focusedColKey = th.getAttribute('data-col');
+          selectionStart = activeEl.selectionStart;
+          selectionEnd = activeEl.selectionEnd;
+        }
+      }
+
+      const members = state.members;
+      const settings = state.tableSettings;
+
+      // 1. Filter query
+      let processed = [...members];
+      if (settings.searchQuery) {
+        const query = settings.searchQuery.toLowerCase();
+        processed = processed.filter(m => m.name.toLowerCase().includes(query));
+      }
+
+      // Column filters
+      Object.keys(settings.columnFilters).forEach(colKey => {
+        const filterVal = settings.columnFilters[colKey].toLowerCase().trim();
+        if (filterVal) {
+          processed = processed.filter(m => {
+            const cellVal = String(m[colKey] !== undefined ? m[colKey] : '').toLowerCase();
+            return cellVal.includes(filterVal);
+          });
+        }
+      });
+
+      // 2. Sort columns
+      processed.sort((a, b) => {
+        let valA = a[settings.sortBy];
+        let valB = b[settings.sortBy];
+
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+
+        if (valA < valB) return settings.sortOrder === 'asc' ? -1 : 1;
+        if (valA > valB) return settings.sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      // 3. Paginate
+      const totalRecords = processed.length;
+      const totalPages = Math.ceil(totalRecords / settings.pageSize) || 1;
+      if (settings.currentPage > totalPages) settings.currentPage = totalPages;
+
+      const startIdx = (settings.currentPage - 1) * settings.pageSize;
+      const endIdx = Math.min(startIdx + settings.pageSize, totalRecords);
+      const paginated = processed.slice(startIdx, endIdx);
+
+      // Headers config
+      const tableColumns = [
+        { key: 'name', label: 'Member Name', type: 'string' },
+        { key: 'kyt', label: 'KYT', type: 'number' },
+        { key: 'attendance', label: 'Attendance', type: 'string' },
+        { key: 'referrals', label: 'Referrals', type: 'number' },
+        { key: 'business', label: 'Business Given', type: 'number' },
+        { key: 'inductions', label: 'Inductions', type: 'number' },
+        { key: 'visitors', label: 'Visitors', type: 'number' },
+        { key: 'testimonials', label: 'Testimonials', type: 'number' },
+        { key: 'score', label: 'Total Score', type: 'number' }
+      ];
+
+      const headersRow = document.getElementById('tableHeaders');
+      headersRow.innerHTML = '';
+
+      tableColumns.forEach(col => {
+        const isSorted = settings.sortBy === col.key;
+        const sortIconClass = isSorted
+          ? (settings.sortOrder === 'asc' ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down')
+          : 'fa-solid fa-sort';
+
+        const filterVal = settings.columnFilters[col.key] || '';
+        const th = document.createElement('th');
+        th.setAttribute('data-col', col.key);
+        if (settings.columnWidths[col.key]) {
+          th.style.width = settings.columnWidths[col.key] + 'px';
+        }
+
+        th.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span onclick="triggerSort('${col.key}')" style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+              ${col.label} <i class="${sortIconClass} sort-icon"></i>
+            </span>
+          </div>
+          <div class="column-filter-container">
+            <input type="text" class="column-filter-input" value="${filterVal}" placeholder="Filter..." oninput="setColFilter('${col.key}', this.value)">
+          </div>
+          <div class="resizer" onmousedown="startResize(event, '${col.key}')"></div>
+        `;
+        headersRow.appendChild(th);
+      });
+
+      // Body rows
+      const body = document.getElementById('tableBody');
+      body.innerHTML = '';
+
+      if (paginated.length === 0) {
+        body.innerHTML = `<tr><td colspan="${tableColumns.length}" style="text-align: center; color: var(--text-muted); padding: 32px;">No matching records found.</td></tr>`;
+        document.getElementById('pageIndicator').textContent = 'Page 1 of 1';
+        return;
+      }
+
+      paginated.forEach(m => {
+        const tr = document.createElement('tr');
+
+        let scoreClass = 'score-low';
+        if (m.score >= 60) scoreClass = 'score-high';
+        else if (m.score >= 30) scoreClass = 'score-med';
+
+        tr.innerHTML = `
+          <td><strong>${m.name}</strong></td>
+          <td>${m.kyt}</td>
+          <td>${m.attendance || '-'}</td>
+          <td>${m.referrals}</td>
+          <td>$${m.business.toLocaleString()}</td>
+          <td>${m.inductions}</td>
+          <td>${m.visitors}</td>
+          <td>${m.testimonials}</td>
+          <td><span class="score-badge ${scoreClass}">${m.score}</span></td>
+        `;
+        body.appendChild(tr);
+      });
+
+      document.getElementById('pageIndicator').textContent = `Page ${settings.currentPage} of ${totalPages}`;
+
+      // Restore focus
+      if (focusedColKey) {
+        const inputs = document.querySelectorAll('.column-filter-input');
+        inputs.forEach(input => {
+          const th = input.closest('th');
+          if (th && th.getAttribute('data-col') === focusedColKey) {
+            input.focus();
+            input.setSelectionRange(selectionStart, selectionEnd);
+          }
+        });
+      }
+    }
+
+    // Sort triggers
+    function triggerSort(colKey) {
+      const settings = state.tableSettings;
+      if (settings.sortBy === colKey) {
+        settings.sortOrder = settings.sortOrder === 'asc' ? 'desc' : 'asc';
+      } else {
+        settings.sortBy = colKey;
+        settings.sortOrder = 'desc'; // default high values first
+      }
+      renderMasterTable();
+    }
+
+    // Filtering & pagination triggers
+    function triggerSearch(val) {
+      state.tableSettings.searchQuery = val;
+      state.tableSettings.currentPage = 1;
+      renderMasterTable();
+    }
+
+    function setColFilter(colKey, val) {
+      if (val.trim() === '') {
+        delete state.tableSettings.columnFilters[colKey];
+      } else {
+        state.tableSettings.columnFilters[colKey] = val;
+      }
+      state.tableSettings.currentPage = 1;
+      renderMasterTable();
+    }
+
+    function resetFilters() {
+      state.tableSettings.searchQuery = '';
+      state.tableSettings.columnFilters = {};
+      document.getElementById('tableSearch').value = '';
+      renderMasterTable();
+      showToast("Filters cleared", "info");
+    }
+
+    function changePageSize(size) {
+      state.tableSettings.pageSize = parseInt(size);
+      state.tableSettings.currentPage = 1;
+      renderMasterTable();
+    }
+
+    function prevPage() {
+      if (state.tableSettings.currentPage > 1) {
+        state.tableSettings.currentPage--;
+        renderMasterTable();
+      }
+    }
+
+    function nextPage() {
+      const totalPages = Math.ceil(state.members.length / state.tableSettings.pageSize) || 1;
+      if (state.tableSettings.currentPage < totalPages) {
+        state.tableSettings.currentPage++;
+        renderMasterTable();
+      }
+    }
+
+    // Table Column Resize
+    let isResizing = false;
+    let currentResizer = null;
+    let startX = 0;
+    let startWidth = 0;
+    let colKeyResize = '';
+
+    function initTableResizeHandlers() {
+      document.addEventListener('mousemove', handleResizeMove);
+      document.addEventListener('mouseup', handleResizeEnd);
+    }
+
+    function startResize(e, colKey) {
+      isResizing = true;
+      colKeyResize = colKey;
+      currentResizer = e.target;
+      currentResizer.classList.add('resizing');
+      startX = e.clientX;
+
+      const th = currentResizer.parentElement;
+      startWidth = th.getBoundingClientRect().width;
+      e.preventDefault();
+    }
+
+    function handleResizeMove(e) {
+      if (!isResizing) return;
+      const offset = e.clientX - startX;
+      const newWidth = Math.max(80, startWidth + offset);
+      state.tableSettings.columnWidths[colKeyResize] = newWidth;
+
+      const ths = document.querySelectorAll(`#tableHeaders th`);
+      ths.forEach(th => {
+        if (th.getAttribute('data-col') === colKeyResize) {
+          th.style.width = newWidth + 'px';
+        }
+      });
+    }
+
+    function handleResizeEnd() {
+      if (!isResizing) return;
+      currentResizer.classList.remove('resizing');
+      isResizing = false;
+      currentResizer = null;
+      renderMasterTable();
+    }
+
+    // Render Leaderboard rankings
+    function renderLeaderboard() {
+      const list = document.getElementById('leaderboardList');
+      const members = [...state.members];
+
+      list.innerHTML = '';
+      if (members.length === 0) {
+        list.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 32px 0;">
+            Upload spreadsheets to populate the leaderboard.
+          </div>
+        `;
+        return;
+      }
+
+      // Sort by score
+      members.sort((a, b) => b.score - a.score);
+
+      members.forEach((m, idx) => {
+        const rank = idx + 1;
+        let rankClass = 'rank-other';
+        let badgeIcon = '';
+
+        if (rank === 1) {
+          rankClass = 'rank-gold';
+          badgeIcon = '<i class="fa-solid fa-trophy"></i>';
+        } else if (rank === 2) {
+          rankClass = 'rank-silver';
+          badgeIcon = '<i class="fa-solid fa-award"></i>';
+        } else if (rank === 3) {
+          rankClass = 'rank-bronze';
+          badgeIcon = '<i class="fa-solid fa-medal"></i>';
+        }
+
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item';
+        item.innerHTML = `
+          <div class="rank-badge ${rankClass}">
+            ${badgeIcon ? badgeIcon : rank}
+          </div>
+          <div class="leaderboard-details">
+            <span class="leaderboard-name">${m.name}</span>
+            <span class="leaderboard-score-val">${m.score} pts</span>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    // Tab switcher
+    function switchTab(tabId, el) {
+      const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach(t => t.classList.remove('active'));
+
+      const panels = document.querySelectorAll('.tab-panel');
+      panels.forEach(p => p.classList.remove('active'));
+
+      el.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+
+      if (tabId === 'chartsTab') {
+        setTimeout(renderCharts, 50);
+      }
+    }
+
+    // Plotly Charts Integration
+    function renderCharts() {
+      const members = state.members;
+      const isDark = state.theme === 'dark';
+
+      const themeColors = {
+        bg: isDark ? '#171d26' : '#ffffff',
+        text: isDark ? '#f1f5f9' : '#2d2514',
+        grid: isDark ? '#2d3748' : 'rgba(146, 108, 21, 0.15)',
+        primary: isDark ? '#6366f1' : '#926C15',
+        secondary: isDark ? '#38bdf8' : '#c79830'
+      };
+
+      const layoutTemplate = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { family: 'Inter, sans-serif', color: themeColors.text },
+        margin: { t: 40, b: 40, l: 40, r: 20 },
+        xaxis: { gridcolor: themeColors.grid, zerolinecolor: themeColors.grid },
+        yaxis: { gridcolor: themeColors.grid, zerolinecolor: themeColors.grid }
+      };
+
+      if (members.length === 0) {
+        const mockMsg = {
+          layout: { ...layoutTemplate, annotations: [{ text: "No data available. Upload spreadsheets.", showarrow: false, font: { size: 16 } }] }
+        };
+        Plotly.newPlot('chartAttendance', [], mockMsg.layout, { responsive: true });
+        Plotly.newPlot('chartScoreDist', [], mockMsg.layout, { responsive: true });
+        Plotly.newPlot('chartTopPerformers', [], mockMsg.layout, { responsive: true });
+        return;
+      }
+
+      // 1. Attendance breakdown
+      const attMap = { P: 0, L: 0, S: 0, A: 0, Unknown: 0 };
+      members.forEach(m => {
+        const s = m.attendance || 'Unknown';
+        if (attMap[s] !== undefined) attMap[s]++;
+        else attMap.Unknown++;
+      });
+
+      const pieData = [{
+        values: [attMap.P, attMap.L, attMap.S, attMap.A, attMap.Unknown],
+        labels: ['Present (P)', 'Late (L)', 'Substitute (S)', 'Absent (A)', 'Not Reported'],
+        type: 'pie',
+        marker: { colors: ['#10b981', '#fbbf24', '#38bdf8', '#ef4444', '#64748b'] },
+        hole: 0.4
+      }];
+      Plotly.newPlot('chartAttendance', pieData, { ...layoutTemplate, showlegend: true }, { responsive: true });
+
+      // 2. Score Distribution
+      const scores = members.map(m => m.score);
+      const histData = [{
+        x: scores,
+        type: 'histogram',
+        nbinsx: 10,
+        marker: { color: themeColors.primary }
+      }];
+      Plotly.newPlot('chartScoreDist', histData, { ...layoutTemplate, xaxis: { title: 'Total score points' }, yaxis: { title: 'Member count' } }, { responsive: true });
+
+      // 3. Top 10 Members Bar Chart
+      const sorted = [...members].sort((a, b) => b.score - a.score).slice(0, 10);
+      const barData = [{
+        x: sorted.map(m => m.name),
+        y: sorted.map(m => m.score),
+        type: 'bar',
+        marker: { color: themeColors.secondary }
+      }];
+      Plotly.newPlot('chartTopPerformers', barData, { ...layoutTemplate }, { responsive: true });
+    }
+
+    // Reports export
+    function exportData(format) {
+      const members = state.members;
+      if (members.length === 0) {
+        showToast("No data to export.", "warning");
+        return;
+      }
+
+      const headers = ['Member Name', 'KYT', 'Attendance', 'Referrals', 'Business Given', 'Inductions', 'Visitors', 'Testimonials', 'Total Score'];
+      const dataRows = members.map(m => [
+        m.name, m.kyt, m.attendance || '-', m.referrals, m.business, m.inductions, m.visitors, m.testimonials, m.score
+      ]);
+
+      if (format === 'csv') {
+        const csvContent = Papa.unparse({ fields: headers, data: dataRows });
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `member_performance_export.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("CSV Export successful", "success");
+      } else if (format === 'excel') {
+        const wsData = [headers, ...dataRows];
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(wb, ws, "Performance");
+        XLSX.writeFile(wb, `member_performance_export.xlsx`);
+        showToast("Excel Export successful", "success");
+      }
+    }
+  </script>
+</body>
+
+</html>
