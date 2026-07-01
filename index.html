@@ -1384,6 +1384,60 @@
       const nameCol = headersLower.findIndex(h => h.includes('name') || h.includes('member') || h.includes('participant') || h.includes('user'));
       if (nameCol !== -1) nameIndex = nameCol;
 
+      // Auto-detect category first
+      const category = detectCategoryFromHeaders(headersLower, filename);
+
+      // Detect value column index based on category
+      let valueColumnIndex = -1;
+      if (category === 'attendance') {
+        let bestValIdx = -1;
+        for (let col = 0; col < headers.length; col++) {
+          if (col === nameIndex) continue;
+          let matchCount = 0;
+          const sampleLimit = Math.min(cleanRows.length, headerRowIndex + 15);
+          for (let row = headerRowIndex + 1; row < sampleLimit; row++) {
+            const cellVal = String((cleanRows[row] || [])[col] || '').trim().toUpperCase();
+            if (/^(P|A|L|S|PRESENT|ABSENT|LATE|SUBSTITUTE)$/.test(cellVal)) {
+              matchCount++;
+            }
+          }
+          if (matchCount > 2) {
+            bestValIdx = col;
+            break;
+          }
+        }
+        if (bestValIdx !== -1) {
+          valueColumnIndex = bestValIdx;
+        } else {
+          const statusIdx = headersLower.findIndex((h, idx) => idx !== nameIndex && (h.includes('status') || h.includes('attendance') || h.includes('present')));
+          valueColumnIndex = statusIdx !== -1 ? statusIdx : (nameIndex + 1);
+        }
+      } else if (category !== 'master') {
+        const valIdx = headersLower.findIndex((h, idx) => idx !== nameIndex && h.trim() !== '' && !h.includes('sl no') && !h.includes('mobile') && !h.includes('email') && !h.includes('phone'));
+        if (valIdx !== -1) {
+          valueColumnIndex = valIdx;
+        } else {
+          const fallbackValIdx = headersLower.findIndex((h, idx) => idx !== nameIndex && h.trim() !== '');
+          valueColumnIndex = fallbackValIdx !== -1 ? fallbackValIdx : (nameIndex + 1);
+        }
+      }
+
+      // Map standard column name
+      const categoryKeyMap = {
+        attendance: 'Attendance Status',
+        kyt: 'KYT Done',
+        referrals: 'Referrals Given',
+        business: 'Business Given',
+        inductions: 'Inductions Count',
+        visitors: 'Visitors Count',
+        testimonials: 'Testimonials Count',
+        bbp: 'BBP Score'
+      };
+
+      if (valueColumnIndex >= 0 && categoryKeyMap[category]) {
+        headers[valueColumnIndex] = categoryKeyMap[category];
+      }
+
       // 2. Extract Data Rows
       const dataset = [];
       const startRow = headerRowIndex + 1;
@@ -1392,7 +1446,7 @@
         const row = cleanRows[r];
         const nameVal = row[nameIndex];
 
-        if (nameVal && String(nameVal).trim()) {
+        if (nameVal && String(nameVal).trim() && !/total|sum|average|member name|participant/i.test(String(nameVal))) {
           const record = {
             rawName: String(nameVal).trim()
           };
@@ -1404,9 +1458,6 @@
           dataset.push(record);
         }
       }
-
-      // 3. Category Auto-Detection
-      const category = detectCategoryFromHeaders(headersLower, filename);
 
       // Create new uploaded file entry
       const fileId = 'file_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
