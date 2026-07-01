@@ -112,15 +112,49 @@ Return raw JSON ONLY. No explanation, no markdown blocks.`;
             let nameColumnIndex = 0;
             let valueColumnIndex = 1;
 
+            // 1. Find the header row by looking for a name column
             for (let i = 0; i < Math.min(5, rawRows.length); i++) {
                 const nameIdx = rawRows[i].findIndex(c => /name|member|participant/i.test(String(c)));
                 if (nameIdx !== -1) {
                     headerRowIndex = i;
                     nameColumnIndex = nameIdx;
-                    // Find a value column
-                    const valIdx = rawRows[i].findIndex((c, idx) => idx !== nameIdx && String(c).trim() !== '');
-                    if (valIdx !== -1) valueColumnIndex = valIdx;
                     break;
+                }
+            }
+
+            // 2. Find the value column index based on the category
+            if (category === 'attendance') {
+                let bestValIdx = -1;
+                for (let col = 0; col < (rawRows[headerRowIndex] || []).length; col++) {
+                    if (col === nameColumnIndex) continue;
+                    let matchCount = 0;
+                    const sampleLimit = Math.min(rawRows.length, headerRowIndex + 15);
+                    for (let row = headerRowIndex + 1; row < sampleLimit; row++) {
+                        const cellVal = String(rawRows[row][col] || '').trim().toUpperCase();
+                        if (/^(P|A|L|S|PRESENT|ABSENT|LATE|SUBSTITUTE)$/.test(cellVal)) {
+                            matchCount++;
+                        }
+                    }
+                    if (matchCount > 2) {
+                        bestValIdx = col;
+                        break;
+                    }
+                }
+                if (bestValIdx !== -1) {
+                    valueColumnIndex = bestValIdx;
+                } else {
+                    const header = rawRows[headerRowIndex] || [];
+                    const statusIdx = header.findIndex((c, idx) => idx !== nameColumnIndex && /status|attendance|present/i.test(String(c)));
+                    valueColumnIndex = statusIdx !== -1 ? statusIdx : (nameColumnIndex + 1);
+                }
+            } else {
+                const header = rawRows[headerRowIndex] || [];
+                const valIdx = header.findIndex((c, idx) => idx !== nameColumnIndex && String(c).trim() !== '' && !/sl\s*no|mobile|email|phone/i.test(String(c)));
+                if (valIdx !== -1) {
+                    valueColumnIndex = valIdx;
+                } else {
+                    const fallbackValIdx = header.findIndex((c, idx) => idx !== nameColumnIndex && String(c).trim() !== '');
+                    valueColumnIndex = fallbackValIdx !== -1 ? fallbackValIdx : (nameColumnIndex + 1);
                 }
             }
 
@@ -131,9 +165,15 @@ Return raw JSON ONLY. No explanation, no markdown blocks.`;
         const category = parsedSchema.category || 'master';
         const headerRowIdx = parsedSchema.headerRowIndex !== undefined ? parsedSchema.headerRowIndex : 0;
         const nameColIdx = parsedSchema.nameColumnIndex !== undefined ? parsedSchema.nameColumnIndex : 0;
+        const valueColIdx = parsedSchema.valueColumnIndex !== undefined ? parsedSchema.valueColumnIndex : -1;
 
         const headerRow = rawRows[headerRowIdx] || [];
         const headers = headerRow.map(h => String(h || '').trim());
+
+        // Assign standard metric name to value column to ensure correct keying in database
+        if (valueColIdx >= 0 && category && categoryKeyMap[category]) {
+            headers[valueColIdx] = categoryKeyMap[category];
+        }
 
         const rows = [];
         for (let i = headerRowIdx + 1; i < rawRows.length; i++) {
