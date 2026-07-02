@@ -1,3 +1,4 @@
 # Netlify redirect rule to proxy API requests to the hosted backend.
 # Replace the URL below with your actual deployed backend URL (e.g. on Render, Railway, or VPS).
-/api/*  https://your-backend-api-url.onrender.com/api/:splat  200
+/api/*  https://bbb-dashboard.onrender.com/api/:splat  200
+
