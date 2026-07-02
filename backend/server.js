@@ -285,6 +285,29 @@ app.post('/api/delete-sheet', async (req, res) => {
     }
 });
 
+// POST /api/update-remark
+app.post('/api/update-remark', async (req, res) => {
+    const { meetingId, name, remark } = req.body;
+    if (!meetingId || !name) {
+        return res.status(400).json({ error: 'Missing meetingId or name.' });
+    }
+    try {
+        const state = await getDashboardData();
+        if (!state.remarks) {
+            state.remarks = {};
+        }
+        if (!state.remarks[meetingId]) {
+            state.remarks[meetingId] = {};
+        }
+        state.remarks[meetingId][name] = remark;
+        await saveDashboardData(state);
+        res.json({ success: true, state });
+    } catch (err) {
+        console.error('Error updating remark:', err);
+        res.status(500).json({ error: 'Failed to update remark.' });
+    }
+});
+
 // POST /api/reset-meeting
 app.post('/api/reset-meeting', async (req, res) => {
     const { meetingId } = req.body;
@@ -296,8 +319,11 @@ app.post('/api/reset-meeting', async (req, res) => {
         const state = await getDashboardData();
         if (state.data[meetingId]) {
             delete state.data[meetingId];
-            await saveDashboardData(state);
         }
+        if (state.remarks && state.remarks[meetingId]) {
+            delete state.remarks[meetingId];
+        }
+        await saveDashboardData(state);
         res.json({ success: true, state });
     } catch (err) {
         console.error('Error resetting meeting:', err);
@@ -308,7 +334,7 @@ app.post('/api/reset-meeting', async (req, res) => {
 // POST /api/reset-all
 app.post('/api/reset-all', async (req, res) => {
     try {
-        const state = { data: {}, cur: 'overall' };
+        const state = { data: {}, cur: 'overall', remarks: {} };
         await saveDashboardData(state);
         res.json({ success: true, state });
     } catch (err) {

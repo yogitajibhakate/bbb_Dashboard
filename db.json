@@ -2,13 +2,570 @@
   "data": {
     "meeting_1": [
       {
-        "id": "f_1782812382426_skr3c",
+        "id": "f_1782899290255_obsuv",
+        "name": "Shree Parashurama -Attendance List.xlsx",
+        "category": "attendance",
+        "count": 77,
+        "headers": [
+          "Sl No",
+          "Member Name",
+          "Mobile No",
+          "Email Id",
+          "",
+          "Attendance Status",
+          ""
+        ],
+        "rows": [
+          {
+            "rawName": "Ajit Hegde",
+            "Sl No": 1,
+            "Mobile No": "\t09731747999",
+            "Email Id": "ajitdanmav@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Anand S Kalame",
+            "Sl No": 2,
+            "Mobile No": 9964420454,
+            "Email Id": "\tananda.kalame@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Avinash A",
+            "Sl No": 3,
+            "Mobile No": "\t9035761979",
+            "Email Id": "\tdesigntecheng.team@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Pavana",
+            "Sl No": 4,
+            "Mobile No": 9902919042,
+            "Email Id": "\tpavana2211@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shobha.H",
+            "Sl No": 5,
+            "Mobile No": "\t9513173516",
+            "Email Id": "sgm.envirosolutions@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Soumya H S",
+            "Sl No": 6,
+            "Mobile No": 9901477144,
+            "Email Id": "\tsoumyasanjana@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Swaroop Suryanarayana",
+            "Sl No": 7,
+            "Mobile No": 9019923915,
+            "Email Id": "\tSwaroopsuri@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Vinod Bhat",
+            "Sl No": 8,
+            "Mobile No": 9845024156,
+            "Email Id": "vb@bhatco.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Yadiyala S L",
+            "Sl No": 9,
+            "Mobile No": 9886282267,
+            "Email Id": "yadiyalasl@yahoo.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Abishek Palimar",
+            "Sl No": 10,
+            "Mobile No": 8494950088,
+            "Email Id": "Info.colournest@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Adithi Jois",
+            "Sl No": 11,
+            "Mobile No": 9591516668,
+            "Email Id": "adithitraveltrails@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ajay kumar",
+            "Sl No": 12,
+            "Mobile No": 9591377442,
+            "Email Id": "ajaykumarn.mail@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Arvind R Joshi",
+            "Sl No": 13,
+            "Mobile No": 9845322980,
+            "Email Id": "avis_123@rediffmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Ashwin Rao",
+            "Sl No": 14,
+            "Mobile No": 9742431720,
+            "Email Id": "ashwin5748@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "B V Krishna",
+            "Sl No": 15,
+            "Mobile No": 9448031064,
+            "Email Id": "\taniphal@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Brunda Ramesh",
+            "Sl No": 16,
+            "Mobile No": "\t8050123661/9141914546",
+            "Email Id": "sudi_999@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Darshan Kamalakar",
+            "Sl No": 17,
+            "Mobile No": 8073274740,
+            "Email Id": "darshankamalakar@kridacare.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Deepti Natarajan",
+            "Sl No": 18,
+            "Mobile No": 9742947041,
+            "Email Id": "deepti.thebodhitree@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Divya Rao Vashisht",
+            "Sl No": 19,
+            "Mobile No": 8792864879,
+            "Email Id": "studiomaayin@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Dr.Sudha Kanchi",
+            "Sl No": 20,
+            "Mobile No": 9739991801,
+            "Email Id": "drsudhakanchi@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Ganapathi Bhat",
+            "Sl No": 21,
+            "Mobile No": 9880804341,
+            "Email Id": "info@gkcontrols.in",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Gopalkrishna Nittur",
+            "Sl No": 22,
+            "Mobile No": 9980372939,
+            "Email Id": "gopalkrishna.nittur@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Gurudutt R",
+            "Sl No": 23,
+            "Mobile No": 9845057874,
+            "Email Id": "kavithaenterprises23@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Guruprasad U",
+            "Sl No": 24,
+            "Mobile No": 9741477555,
+            "Email Id": "guruprasad@waftonn.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Jayanath B",
+            "Sl No": 25,
+            "Mobile No": 8431456197,
+            "Email Id": "badadaagro@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Jayaram N",
+            "Sl No": 26,
+            "Mobile No": 9964751738,
+            "Email Id": "slnelec.murthy@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "K P Vilas",
+            "Sl No": 27,
+            "Mobile No": 9880598410,
+            "Email Id": "vilassamsung@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Kiran N",
+            "Sl No": 28,
+            "Mobile No": 9591989160,
+            "Email Id": "narayana.kiran@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Manjunath MS",
+            "Sl No": 29,
+            "Mobile No": 8050011620,
+            "Email Id": "man369man@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Mohan K",
+            "Sl No": 30,
+            "Mobile No": 9845373148,
+            "Email Id": "snis2003@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Muralidhar Rao K J",
+            "Sl No": 31,
+            "Mobile No": 9448849596,
+            "Email Id": "sanathengineers@yahoo.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagaraj Hebbar",
+            "Sl No": 32,
+            "Mobile No": 9916209463,
+            "Email Id": "sales.flameceasefire@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagaraj Herur",
+            "Sl No": 33,
+            "Mobile No": 9886659648,
+            "Email Id": "nagarajherur@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagarathna Bhat",
+            "Sl No": 34,
+            "Mobile No": 9740080146,
+            "Email Id": "nagarathnabhatt@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Naveen Hegde",
+            "Sl No": 35,
+            "Mobile No": 9148892290,
+            "Email Id": "naveen.hegde900@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nithin Muralidhar",
+            "Sl No": 36,
+            "Mobile No": 8050305703,
+            "Email Id": "nithin13692@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Pallavi K G",
+            "Sl No": 37,
+            "Mobile No": 9986108961,
+            "Email Id": "pallukg@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Pavan Anant Naganur",
+            "Sl No": 38,
+            "Mobile No": 9739337771,
+            "Email Id": "pavan4123@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Pavan Hebbar",
+            "Sl No": 39,
+            "Mobile No": 9986971707,
+            "Email Id": "info@adsecuritysolutions.in",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Pavana Kumar B R",
+            "Sl No": 40,
+            "Mobile No": 9880280484,
+            "Email Id": "pavanapowerstechnologies@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Prakash Bhat N",
+            "Sl No": 41,
+            "Mobile No": 9844027803,
+            "Email Id": "prakashbhatnooji@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Prasad S N",
+            "Sl No": 42,
+            "Mobile No": 9741699956,
+            "Email Id": "prasadalphapower@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Radhakrishna KS",
+            "Sl No": 43,
+            "Mobile No": 8553005509,
+            "Email Id": "ssautotech2023@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Raghavendra Achar",
+            "Sl No": 44,
+            "Mobile No": 9880921901,
+            "Email Id": "raghavendra2194@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Raghavendra Kulkarni",
+            "Sl No": 45,
+            "Mobile No": 9945242996,
+            "Email Id": "toraaghu@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Rajitha R",
+            "Sl No": 46,
+            "Mobile No": 9591516778,
+            "Email Id": "acdigitalwing@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Rakshitha Dutt",
+            "Sl No": 47,
+            "Mobile No": 9845389050,
+            "Email Id": "rakshithadutt5@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ram Prasad",
+            "Sl No": 48,
+            "Mobile No": 9845066289,
+            "Email Id": "info@totalcorporateservices.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ramakrishna Hegde",
+            "Sl No": 49,
+            "Mobile No": 9845102051,
+            "Email Id": "sbv66@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ramesh Jois P",
+            "Sl No": 50,
+            "Mobile No": 9448121940,
+            "Email Id": "rameshjois22@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ravi Kumar G",
+            "Sl No": 51,
+            "Mobile No": 9740984131,
+            "Email Id": "ravikumar.woods@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ravikumar T R",
+            "Sl No": 52,
+            "Mobile No": 9845512724,
+            "Email Id": "ravikumartr1740@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Richa Khandelwal Bhat",
+            "Sl No": 53,
+            "Mobile No": 6363874818,
+            "Email Id": "richa@keshavaproductions.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Rohan R",
+            "Sl No": 54,
+            "Mobile No": 9972128326,
+            "Email Id": "adderecreations@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Satyaram Bhat",
+            "Sl No": 55,
+            "Mobile No": 8277336303,
+            "Email Id": "md.bhatandbhat@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Shankaranarayan Hiregange",
+            "Sl No": 56,
+            "Mobile No": 9845968089,
+            "Email Id": "shankar.homescape@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shashi Nadig",
+            "Sl No": 57,
+            "Mobile No": 9945792113,
+            "Email Id": "shahshi@nasugroup.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shashibhushan Hegde",
+            "Sl No": 58,
+            "Mobile No": 9008587322,
+            "Email Id": "brickwizz686@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shruthi Pavan Hebbar",
+            "Sl No": 59,
+            "Mobile No": 7829548619,
+            "Email Id": "sales@bramhiinfotech.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Shyam Sunder Rao",
+            "Sl No": 60,
+            "Mobile No": 9449242988,
+            "Email Id": "shyamrao1968@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shyama Sagar",
+            "Sl No": 61,
+            "Mobile No": 8105492479,
+            "Email Id": "sagar@srkc.co",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shylesh S. Pattavardhan",
+            "Sl No": 62,
+            "Mobile No": 9448495671,
+            "Email Id": "vedicshylu@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Sree Nikhil B",
+            "Sl No": 63,
+            "Mobile No": 7204779642,
+            "Email Id": "sreenike@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Sridhar Nagarajan",
+            "Sl No": 64,
+            "Mobile No": 9740791111,
+            "Email Id": "nischal2004@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srikanth Prabhu",
+            "Sl No": 65,
+            "Mobile No": 7090449566,
+            "Email Id": "bhoomikacashew999@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srinath K C",
+            "Sl No": 66,
+            "Mobile No": 9916143441,
+            "Email Id": "nathukc@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srinivasan Malnad",
+            "Sl No": 67,
+            "Mobile No": 9008734772,
+            "Email Id": "info@tamagnapersonalcare.in",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Sudarshan B R",
+            "Sl No": 68,
+            "Mobile No": 9886766132,
+            "Email Id": "sudarshanbr7@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Sudarshan B S",
+            "Sl No": 69,
+            "Mobile No": 9538855070,
+            "Email Id": "avenuecinemas2023@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Sudhir R",
+            "Sl No": 70,
+            "Mobile No": 9243499600,
+            "Email Id": "sudhir.r@arthagroup.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Swathy P",
+            "Sl No": 71,
+            "Mobile No": 9741319240,
+            "Email Id": "Swathi199002@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Uday Bhaskar",
+            "Sl No": 72,
+            "Mobile No": 9845267188,
+            "Email Id": "prabhodaya67@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Vaarija Srinivas",
+            "Sl No": 73,
+            "Mobile No": 9686574113,
+            "Email Id": "vaarijasrinivas@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Vadiraja Samaga",
+            "Sl No": 74,
+            "Mobile No": 9448084480,
+            "Email Id": "vadirajasamaga@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Vinay Kumar Swamy",
+            "Sl No": 75,
+            "Mobile No": 9901093358,
+            "Email Id": "swamyvi@hotmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Vinay Sharma",
+            "Sl No": 76,
+            "Mobile No": 7349387989,
+            "Email Id": "vinaytpfosroc@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Vinayak Hegde",
+            "Sl No": 77,
+            "Mobile No": 9845068953,
+            "Email Id": "contactvihc@gmail.com",
+            "Attendance Status": "Present"
+          }
+        ],
+        "meeting": "meeting_1"
+      },
+      {
+        "id": "f_1782899657956_1s63j",
         "name": "Meeting Report From 7 May to 21 May 2026.xlsx",
-        "category": "business",
+        "category": "referrals",
         "count": 80,
         "headers": [
           "Name",
-          "Referrals given inside chapter",
+          "Referrals Given",
           "Referrals given outside chapter",
           "Business given",
           "KYT"
@@ -16,560 +573,560 @@
         "rows": [
           {
             "rawName": "Abishek Palimar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 120000,
             "KYT": 0
           },
           {
             "rawName": "Adithi Jois",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ajay kumar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Ajit Hegde",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 200,
             "KYT": 0
           },
           {
             "rawName": "Anand  S Kalame",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 2500,
             "KYT": 0
           },
           {
             "rawName": "Arvind R Joshi",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Ashwin Rao",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 720,
             "KYT": 0
           },
           {
             "rawName": "Avinash A",
-            "Referrals given inside chapter": 3,
+            "Referrals Given": 3,
             "Referrals given outside chapter": 0,
             "Business given": 292528,
             "KYT": 0
           },
           {
             "rawName": "B V Krishna",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 465615,
             "KYT": 0
           },
           {
             "rawName": "Brunda Ramesh",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 11200,
             "KYT": 0
           },
           {
             "rawName": "DARSHAN KAMALAKAR",
-            "Referrals given inside chapter": 2,
+            "Referrals Given": 2,
             "Referrals given outside chapter": 1,
             "Business given": 53500,
             "KYT": 1
           },
           {
             "rawName": "Deepti Natarajan",
-            "Referrals given inside chapter": 3,
+            "Referrals Given": 3,
             "Referrals given outside chapter": 0,
             "Business given": 881269,
             "KYT": 0
           },
           {
             "rawName": "Divya Rao Vashisht",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 0
           },
           {
             "rawName": "Dr.RAJESH",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Dr.Sudha Kanchi",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 57500,
             "KYT": 0
           },
           {
             "rawName": "GANAPATHI BHAT",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 25000,
             "KYT": 0
           },
           {
             "rawName": "Gopalkrishna Nittur",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 16196,
             "KYT": 1
           },
           {
             "rawName": "Gurudutt R",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 27500,
             "KYT": 3
           },
           {
             "rawName": "Guruprasad U",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 466249,
             "KYT": 0
           },
           {
             "rawName": "JAYANTH.B",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Jayaram N",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 300000,
             "KYT": 0
           },
           {
             "rawName": "K P Vilas",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 8
           },
           {
             "rawName": "Kiran N",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 11500,
             "KYT": 1
           },
           {
             "rawName": "Manjunath MS",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Mohan K",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 395000,
             "KYT": 0
           },
           {
             "rawName": "Muralidhar Rao K J",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1027855,
             "KYT": 0
           },
           {
             "rawName": "Nagaraj Hebbar",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 150000,
             "KYT": 0
           },
           {
             "rawName": "Nagaraj Herur",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Nagarathna Bhat",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 2
           },
           {
             "rawName": "Naveen Hegde",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 7500,
             "KYT": 0
           },
           {
             "rawName": "Nithin Muralidhar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 31000,
             "KYT": 0
           },
           {
             "rawName": "Pallavi K G",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 58600,
             "KYT": 0
           },
           {
             "rawName": "Pavan Anant Naganur",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 5510000,
             "KYT": 0
           },
           {
             "rawName": "Pavan Hebbar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 122478,
             "KYT": 0
           },
           {
             "rawName": "Pavana",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Pavana Kumar B R",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 374940,
             "KYT": 0
           },
           {
             "rawName": "Prakash Bhat N",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 3000,
             "KYT": 0
           },
           {
             "rawName": "Prasad S N",
-            "Referrals given inside chapter": 3,
+            "Referrals Given": 3,
             "Referrals given outside chapter": 0,
             "Business given": 135388,
             "KYT": 0
           },
           {
             "rawName": "Radhakrishna K S",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 97000,
             "KYT": 0
           },
           {
             "rawName": "RAGHAVENDRA ACHAR",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 13250,
             "KYT": 0
           },
           {
             "rawName": "Raghavendra Kulkarni",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Rajitha R",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 2
           },
           {
             "rawName": "Rakshitha Dutt",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 14240,
             "KYT": 0
           },
           {
             "rawName": "RAM PRASAD V K",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ramakrishna Hegde",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ramesh Jois P",
-            "Referrals given inside chapter": 7,
+            "Referrals Given": 7,
             "Referrals given outside chapter": 0,
             "Business given": 15190,
             "KYT": 0
           },
           {
             "rawName": "Ravi Kumar G - Patron Member",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 25193,
             "KYT": 0
           },
           {
             "rawName": "Ravikumar T R",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 600,
             "KYT": 0
           },
           {
             "rawName": "Richa Khandelwal Bhat",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Rohan R",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Satyaram Bhat",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 100600,
             "KYT": 0
           },
           {
             "rawName": "Shankaranarayan Hiregange",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 35000,
             "KYT": 0
           },
           {
             "rawName": "Shashi Nadig",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 750,
             "KYT": 3
           },
           {
             "rawName": "Shashibhushan Hegde",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 3
           },
           {
             "rawName": "Shobha.H",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 6000,
             "KYT": 0
           },
           {
             "rawName": "Shruthi Pavan Hebbar",
-            "Referrals given inside chapter": 2,
+            "Referrals Given": 2,
             "Referrals given outside chapter": 0,
             "Business given": 27000,
             "KYT": 0
           },
           {
             "rawName": "SHRUTHI RAGHAVENDRA ACHAR",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Shyam Sunder Rao",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Shyama Sagar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 12960,
             "KYT": 0
           },
           {
             "rawName": "Shylesh S. Pattavardhan",
-            "Referrals given inside chapter": 2,
+            "Referrals Given": 2,
             "Referrals given outside chapter": 1,
             "Business given": 32000,
             "KYT": 1
           },
           {
             "rawName": "Soumya H S",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sree Nikhil B",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sridhar Nagarajan",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 24000,
             "KYT": 0
           },
           {
             "rawName": "Srikanth Prabhu",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1455,
             "KYT": 0
           },
           {
             "rawName": "Srinath K C",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 1500000,
             "KYT": 0
           },
           {
             "rawName": "Srinivasan Malnad",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 13389,
             "KYT": 0
           },
           {
             "rawName": "Sudarshan B R",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sudarshan B S",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sudhir R",
-            "Referrals given inside chapter": 1,
+            "Referrals Given": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Swaroop Suryanarayana",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Swathy P",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 450,
             "KYT": 1
           },
           {
             "rawName": "Udaya Bhaskar",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1500,
             "KYT": 1
           },
           {
             "rawName": "Vaarija Srinivas",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 2
           },
           {
             "rawName": "Vadiraja Samaga",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 5000,
             "KYT": 0
           },
           {
             "rawName": "Varadharaj Rao",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinay Kumar Swamy",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinay Sharma",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinayak Hegde",
-            "Referrals given inside chapter": 2,
+            "Referrals Given": 2,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinod Bhat",
-            "Referrals given inside chapter": 0,
+            "Referrals Given": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Yadiyala S L",
-            "Referrals given inside chapter": 2,
+            "Referrals Given": 2,
             "Referrals given outside chapter": 0,
             "Business given": 173788,
             "KYT": 0
@@ -578,585 +1135,568 @@
         "meeting": "meeting_1"
       }
     ],
-    "meeting_2": [
+    "meeting_3": [
       {
-        "id": "f_1782817102899_lv9cj",
-        "name": "Meeting Report From 7 May to 21 May 2026.xlsx",
-        "category": "business",
-        "count": 80,
+        "id": "f_1782907263179_n4te9",
+        "name": "Shree Parashurama -Attendance List.xlsx",
+        "category": "attendance",
+        "count": 77,
         "headers": [
-          "Name",
-          "Referrals given inside chapter",
-          "Referrals given outside chapter",
-          "Business given",
-          "KYT"
+          "Sl No",
+          "Member Name",
+          "Mobile No",
+          "Email Id",
+          "",
+          "Attendance Status",
+          ""
         ],
         "rows": [
           {
-            "rawName": "Abishek Palimar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 120000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Adithi Jois",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Ajay kumar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 0,
-            "KYT": 1
-          },
-          {
             "rawName": "Ajit Hegde",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 200,
-            "KYT": 0
+            "Sl No": 1,
+            "Mobile No": "\t09731747999",
+            "Email Id": "ajitdanmav@gmail.com",
+            "Attendance Status": "Absent"
           },
           {
-            "rawName": "Anand  S Kalame",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 2500,
-            "KYT": 0
-          },
-          {
-            "rawName": "Arvind R Joshi",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 1
-          },
-          {
-            "rawName": "Ashwin Rao",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 720,
-            "KYT": 0
+            "rawName": "Anand S Kalame",
+            "Sl No": 2,
+            "Mobile No": 9964420454,
+            "Email Id": "\tananda.kalame@gmail.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Avinash A",
-            "Referrals given inside chapter": 3,
-            "Referrals given outside chapter": 0,
-            "Business given": 292528,
-            "KYT": 0
-          },
-          {
-            "rawName": "B V Krishna",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 465615,
-            "KYT": 0
-          },
-          {
-            "rawName": "Brunda Ramesh",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 11200,
-            "KYT": 0
-          },
-          {
-            "rawName": "DARSHAN KAMALAKAR",
-            "Referrals given inside chapter": 2,
-            "Referrals given outside chapter": 1,
-            "Business given": 53500,
-            "KYT": 1
-          },
-          {
-            "rawName": "Deepti Natarajan",
-            "Referrals given inside chapter": 3,
-            "Referrals given outside chapter": 0,
-            "Business given": 881269,
-            "KYT": 0
-          },
-          {
-            "rawName": "Divya Rao Vashisht",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 10000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Dr.RAJESH",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Dr.Sudha Kanchi",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 57500,
-            "KYT": 0
-          },
-          {
-            "rawName": "GANAPATHI BHAT",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 25000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Gopalkrishna Nittur",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 16196,
-            "KYT": 1
-          },
-          {
-            "rawName": "Gurudutt R",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 27500,
-            "KYT": 3
-          },
-          {
-            "rawName": "Guruprasad U",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 466249,
-            "KYT": 0
-          },
-          {
-            "rawName": "JAYANTH.B",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Jayaram N",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 300000,
-            "KYT": 0
-          },
-          {
-            "rawName": "K P Vilas",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 10000,
-            "KYT": 8
-          },
-          {
-            "rawName": "Kiran N",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 11500,
-            "KYT": 1
-          },
-          {
-            "rawName": "Manjunath MS",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 1
-          },
-          {
-            "rawName": "Mohan K",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 395000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Muralidhar Rao K J",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 1027855,
-            "KYT": 0
-          },
-          {
-            "rawName": "Nagaraj Hebbar",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 150000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Nagaraj Herur",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Nagarathna Bhat",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 10000,
-            "KYT": 2
-          },
-          {
-            "rawName": "Naveen Hegde",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 7500,
-            "KYT": 0
-          },
-          {
-            "rawName": "Nithin Muralidhar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 31000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Pallavi K G",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 58600,
-            "KYT": 0
-          },
-          {
-            "rawName": "Pavan Anant Naganur",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 5510000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Pavan Hebbar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 122478,
-            "KYT": 0
+            "Sl No": 3,
+            "Mobile No": "\t9035761979",
+            "Email Id": "\tdesigntecheng.team@gmail.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Pavana",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Pavana Kumar B R",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 374940,
-            "KYT": 0
-          },
-          {
-            "rawName": "Prakash Bhat N",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 3000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Prasad S N",
-            "Referrals given inside chapter": 3,
-            "Referrals given outside chapter": 0,
-            "Business given": 135388,
-            "KYT": 0
-          },
-          {
-            "rawName": "Radhakrishna K S",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 97000,
-            "KYT": 0
-          },
-          {
-            "rawName": "RAGHAVENDRA ACHAR",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 13250,
-            "KYT": 0
-          },
-          {
-            "rawName": "Raghavendra Kulkarni",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Rajitha R",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 2
-          },
-          {
-            "rawName": "Rakshitha Dutt",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 14240,
-            "KYT": 0
-          },
-          {
-            "rawName": "RAM PRASAD V K",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Ramakrishna Hegde",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Ramesh Jois P",
-            "Referrals given inside chapter": 7,
-            "Referrals given outside chapter": 0,
-            "Business given": 15190,
-            "KYT": 0
-          },
-          {
-            "rawName": "Ravi Kumar G - Patron Member",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 25193,
-            "KYT": 0
-          },
-          {
-            "rawName": "Ravikumar T R",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 600,
-            "KYT": 0
-          },
-          {
-            "rawName": "Richa Khandelwal Bhat",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Rohan R",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 1
-          },
-          {
-            "rawName": "Satyaram Bhat",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 100600,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shankaranarayan Hiregange",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 35000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shashi Nadig",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 750,
-            "KYT": 3
-          },
-          {
-            "rawName": "Shashibhushan Hegde",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 3
+            "Sl No": 4,
+            "Mobile No": 9902919042,
+            "Email Id": "\tpavana2211@gmail.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Shobha.H",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 6000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shruthi Pavan Hebbar",
-            "Referrals given inside chapter": 2,
-            "Referrals given outside chapter": 0,
-            "Business given": 27000,
-            "KYT": 0
-          },
-          {
-            "rawName": "SHRUTHI RAGHAVENDRA ACHAR",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shyam Sunder Rao",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shyama Sagar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 12960,
-            "KYT": 0
-          },
-          {
-            "rawName": "Shylesh S. Pattavardhan",
-            "Referrals given inside chapter": 2,
-            "Referrals given outside chapter": 1,
-            "Business given": 32000,
-            "KYT": 1
+            "Sl No": 5,
+            "Mobile No": "\t9513173516",
+            "Email Id": "sgm.envirosolutions@gmail.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Soumya H S",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Sree Nikhil B",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Sridhar Nagarajan",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 24000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Srikanth Prabhu",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 1455,
-            "KYT": 0
-          },
-          {
-            "rawName": "Srinath K C",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 1500000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Srinivasan Malnad",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 13389,
-            "KYT": 0
-          },
-          {
-            "rawName": "Sudarshan B R",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Sudarshan B S",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Sudhir R",
-            "Referrals given inside chapter": 1,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
+            "Sl No": 6,
+            "Mobile No": 9901477144,
+            "Email Id": "\tsoumyasanjana@gmail.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Swaroop Suryanarayana",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Swathy P",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 450,
-            "KYT": 1
-          },
-          {
-            "rawName": "Udaya Bhaskar",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 1500,
-            "KYT": 1
-          },
-          {
-            "rawName": "Vaarija Srinivas",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 0,
-            "KYT": 2
-          },
-          {
-            "rawName": "Vadiraja Samaga",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 5000,
-            "KYT": 0
-          },
-          {
-            "rawName": "Varadharaj Rao",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Vinay Kumar Swamy",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Vinay Sharma",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
-          },
-          {
-            "rawName": "Vinayak Hegde",
-            "Referrals given inside chapter": 2,
-            "Referrals given outside chapter": 0,
-            "Business given": 0,
-            "KYT": 0
+            "Sl No": 7,
+            "Mobile No": 9019923915,
+            "Email Id": "\tSwaroopsuri@gmail.com",
+            "Attendance Status": "Absent"
           },
           {
             "rawName": "Vinod Bhat",
-            "Referrals given inside chapter": 0,
-            "Referrals given outside chapter": 1,
-            "Business given": 0,
-            "KYT": 0
+            "Sl No": 8,
+            "Mobile No": 9845024156,
+            "Email Id": "vb@bhatco.com",
+            "Attendance Status": "Present"
           },
           {
             "rawName": "Yadiyala S L",
-            "Referrals given inside chapter": 2,
-            "Referrals given outside chapter": 0,
-            "Business given": 173788,
-            "KYT": 0
+            "Sl No": 9,
+            "Mobile No": 9886282267,
+            "Email Id": "yadiyalasl@yahoo.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Abishek Palimar",
+            "Sl No": 10,
+            "Mobile No": 8494950088,
+            "Email Id": "Info.colournest@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Adithi Jois",
+            "Sl No": 11,
+            "Mobile No": 9591516668,
+            "Email Id": "adithitraveltrails@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ajay kumar",
+            "Sl No": 12,
+            "Mobile No": 9591377442,
+            "Email Id": "ajaykumarn.mail@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Arvind R Joshi",
+            "Sl No": 13,
+            "Mobile No": 9845322980,
+            "Email Id": "avis_123@rediffmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Ashwin Rao",
+            "Sl No": 14,
+            "Mobile No": 9742431720,
+            "Email Id": "ashwin5748@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "B V Krishna",
+            "Sl No": 15,
+            "Mobile No": 9448031064,
+            "Email Id": "\taniphal@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Brunda Ramesh",
+            "Sl No": 16,
+            "Mobile No": "\t8050123661/9141914546",
+            "Email Id": "sudi_999@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Darshan Kamalakar",
+            "Sl No": 17,
+            "Mobile No": 8073274740,
+            "Email Id": "darshankamalakar@kridacare.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Deepti Natarajan",
+            "Sl No": 18,
+            "Mobile No": 9742947041,
+            "Email Id": "deepti.thebodhitree@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Divya Rao Vashisht",
+            "Sl No": 19,
+            "Mobile No": 8792864879,
+            "Email Id": "studiomaayin@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Dr.Sudha Kanchi",
+            "Sl No": 20,
+            "Mobile No": 9739991801,
+            "Email Id": "drsudhakanchi@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Ganapathi Bhat",
+            "Sl No": 21,
+            "Mobile No": 9880804341,
+            "Email Id": "info@gkcontrols.in",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Gopalkrishna Nittur",
+            "Sl No": 22,
+            "Mobile No": 9980372939,
+            "Email Id": "gopalkrishna.nittur@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Gurudutt R",
+            "Sl No": 23,
+            "Mobile No": 9845057874,
+            "Email Id": "kavithaenterprises23@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Guruprasad U",
+            "Sl No": 24,
+            "Mobile No": 9741477555,
+            "Email Id": "guruprasad@waftonn.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Jayanath B",
+            "Sl No": 25,
+            "Mobile No": 8431456197,
+            "Email Id": "badadaagro@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Jayaram N",
+            "Sl No": 26,
+            "Mobile No": 9964751738,
+            "Email Id": "slnelec.murthy@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "K P Vilas",
+            "Sl No": 27,
+            "Mobile No": 9880598410,
+            "Email Id": "vilassamsung@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Kiran N",
+            "Sl No": 28,
+            "Mobile No": 9591989160,
+            "Email Id": "narayana.kiran@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Manjunath MS",
+            "Sl No": 29,
+            "Mobile No": 8050011620,
+            "Email Id": "man369man@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Mohan K",
+            "Sl No": 30,
+            "Mobile No": 9845373148,
+            "Email Id": "snis2003@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Muralidhar Rao K J",
+            "Sl No": 31,
+            "Mobile No": 9448849596,
+            "Email Id": "sanathengineers@yahoo.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagaraj Hebbar",
+            "Sl No": 32,
+            "Mobile No": 9916209463,
+            "Email Id": "sales.flameceasefire@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagaraj Herur",
+            "Sl No": 33,
+            "Mobile No": 9886659648,
+            "Email Id": "nagarajherur@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nagarathna Bhat",
+            "Sl No": 34,
+            "Mobile No": 9740080146,
+            "Email Id": "nagarathnabhatt@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Naveen Hegde",
+            "Sl No": 35,
+            "Mobile No": 9148892290,
+            "Email Id": "naveen.hegde900@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Nithin Muralidhar",
+            "Sl No": 36,
+            "Mobile No": 8050305703,
+            "Email Id": "nithin13692@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Pallavi K G",
+            "Sl No": 37,
+            "Mobile No": 9986108961,
+            "Email Id": "pallukg@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Pavan Anant Naganur",
+            "Sl No": 38,
+            "Mobile No": 9739337771,
+            "Email Id": "pavan4123@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Pavan Hebbar",
+            "Sl No": 39,
+            "Mobile No": 9986971707,
+            "Email Id": "info@adsecuritysolutions.in",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Pavana Kumar B R",
+            "Sl No": 40,
+            "Mobile No": 9880280484,
+            "Email Id": "pavanapowerstechnologies@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Prakash Bhat N",
+            "Sl No": 41,
+            "Mobile No": 9844027803,
+            "Email Id": "prakashbhatnooji@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Prasad S N",
+            "Sl No": 42,
+            "Mobile No": 9741699956,
+            "Email Id": "prasadalphapower@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Radhakrishna KS",
+            "Sl No": 43,
+            "Mobile No": 8553005509,
+            "Email Id": "ssautotech2023@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Raghavendra Achar",
+            "Sl No": 44,
+            "Mobile No": 9880921901,
+            "Email Id": "raghavendra2194@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Raghavendra Kulkarni",
+            "Sl No": 45,
+            "Mobile No": 9945242996,
+            "Email Id": "toraaghu@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Rajitha R",
+            "Sl No": 46,
+            "Mobile No": 9591516778,
+            "Email Id": "acdigitalwing@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Rakshitha Dutt",
+            "Sl No": 47,
+            "Mobile No": 9845389050,
+            "Email Id": "rakshithadutt5@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ram Prasad",
+            "Sl No": 48,
+            "Mobile No": 9845066289,
+            "Email Id": "info@totalcorporateservices.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ramakrishna Hegde",
+            "Sl No": 49,
+            "Mobile No": 9845102051,
+            "Email Id": "sbv66@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ramesh Jois P",
+            "Sl No": 50,
+            "Mobile No": 9448121940,
+            "Email Id": "rameshjois22@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ravi Kumar G",
+            "Sl No": 51,
+            "Mobile No": 9740984131,
+            "Email Id": "ravikumar.woods@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Ravikumar T R",
+            "Sl No": 52,
+            "Mobile No": 9845512724,
+            "Email Id": "ravikumartr1740@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Richa Khandelwal Bhat",
+            "Sl No": 53,
+            "Mobile No": 6363874818,
+            "Email Id": "richa@keshavaproductions.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Rohan R",
+            "Sl No": 54,
+            "Mobile No": 9972128326,
+            "Email Id": "adderecreations@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Satyaram Bhat",
+            "Sl No": 55,
+            "Mobile No": 8277336303,
+            "Email Id": "md.bhatandbhat@gmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Shankaranarayan Hiregange",
+            "Sl No": 56,
+            "Mobile No": 9845968089,
+            "Email Id": "shankar.homescape@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shashi Nadig",
+            "Sl No": 57,
+            "Mobile No": 9945792113,
+            "Email Id": "shahshi@nasugroup.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shashibhushan Hegde",
+            "Sl No": 58,
+            "Mobile No": 9008587322,
+            "Email Id": "brickwizz686@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shruthi Pavan Hebbar",
+            "Sl No": 59,
+            "Mobile No": 7829548619,
+            "Email Id": "sales@bramhiinfotech.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Shyam Sunder Rao",
+            "Sl No": 60,
+            "Mobile No": 9449242988,
+            "Email Id": "shyamrao1968@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shyama Sagar",
+            "Sl No": 61,
+            "Mobile No": 8105492479,
+            "Email Id": "sagar@srkc.co",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Shylesh S. Pattavardhan",
+            "Sl No": 62,
+            "Mobile No": 9448495671,
+            "Email Id": "vedicshylu@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Sree Nikhil B",
+            "Sl No": 63,
+            "Mobile No": 7204779642,
+            "Email Id": "sreenike@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Sridhar Nagarajan",
+            "Sl No": 64,
+            "Mobile No": 9740791111,
+            "Email Id": "nischal2004@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srikanth Prabhu",
+            "Sl No": 65,
+            "Mobile No": 7090449566,
+            "Email Id": "bhoomikacashew999@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srinath K C",
+            "Sl No": 66,
+            "Mobile No": 9916143441,
+            "Email Id": "nathukc@yahoo.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Srinivasan Malnad",
+            "Sl No": 67,
+            "Mobile No": 9008734772,
+            "Email Id": "info@tamagnapersonalcare.in",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Sudarshan B R",
+            "Sl No": 68,
+            "Mobile No": 9886766132,
+            "Email Id": "sudarshanbr7@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Sudarshan B S",
+            "Sl No": 69,
+            "Mobile No": 9538855070,
+            "Email Id": "avenuecinemas2023@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Sudhir R",
+            "Sl No": 70,
+            "Mobile No": 9243499600,
+            "Email Id": "sudhir.r@arthagroup.co.in",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Swathy P",
+            "Sl No": 71,
+            "Mobile No": 9741319240,
+            "Email Id": "Swathi199002@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Uday Bhaskar",
+            "Sl No": 72,
+            "Mobile No": 9845267188,
+            "Email Id": "prabhodaya67@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Vaarija Srinivas",
+            "Sl No": 73,
+            "Mobile No": 9686574113,
+            "Email Id": "vaarijasrinivas@gmail.com",
+            "Attendance Status": "Absent"
+          },
+          {
+            "rawName": "Vadiraja Samaga",
+            "Sl No": 74,
+            "Mobile No": 9448084480,
+            "Email Id": "vadirajasamaga@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Vinay Kumar Swamy",
+            "Sl No": 75,
+            "Mobile No": 9901093358,
+            "Email Id": "swamyvi@hotmail.com",
+            "Attendance Status": "Late"
+          },
+          {
+            "rawName": "Vinay Sharma",
+            "Sl No": 76,
+            "Mobile No": 7349387989,
+            "Email Id": "vinaytpfosroc@gmail.com",
+            "Attendance Status": "Present"
+          },
+          {
+            "rawName": "Vinayak Hegde",
+            "Sl No": 77,
+            "Mobile No": 9845068953,
+            "Email Id": "contactvihc@gmail.com",
+            "Attendance Status": "Present"
           }
         ],
-        "meeting": "meeting_2"
-      },
+        "meeting": "meeting_3"
+      }
+    ],
+    "meeting_2": [
       {
-        "id": "f_1782897772226_ehk3q",
+        "id": "f_1782907278561_5wrxk",
         "name": "Shree Parashurama -Attendance List.xlsx",
         "category": "attendance",
         "count": 77,
@@ -1714,5 +2254,10 @@
       }
     ]
   },
-  "cur": "overall"
+  "cur": "overall",
+  "remarks": {
+    "meeting_1": {
+      "Darshan Kamalakar": "High performer"
+    }
+  }
 }

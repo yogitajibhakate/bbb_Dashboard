@@ -306,13 +306,97 @@ function computeOverall(data) {
     });
   });
 
+  const divisor = Object.keys(meetingResults).length || 1;
+  merged.forEach(rec => {
+    rec.score = Math.round(rec.score / divisor);
+  });
+
   merged.sort((a, b) => b.score - a.score);
   return merged;
+}
+
+function computeAbsenceAlerts(data) {
+  const meetingResults = {};
+  Object.entries(data).forEach(([mk, files]) => {
+    if (Array.isArray(files) && files.length) {
+      meetingResults[mk] = consolidate(files);
+    }
+  });
+
+  if (!Object.keys(meetingResults).length) return { consecutive: [], total: [] };
+
+  const sortedMeetingKeys = Object.keys(meetingResults).sort((a, b) => {
+    const numA = parseInt(a.replace('meeting_', ''), 10);
+    const numB = parseInt(b.replace('meeting_', ''), 10);
+    return numA - numB;
+  });
+
+  const allNamesSet = new Set();
+  Object.values(meetingResults).forEach(members => {
+    members.forEach(m => allNamesSet.add(m.name));
+  });
+  const allNames = Array.from(allNamesSet);
+
+  const uniqueNames = [];
+  allNames.forEach(name => {
+    if (!bestMatch(name, uniqueNames)) uniqueNames.push(name);
+  });
+
+  const consecutiveAlerts = [];
+  const totalAlerts = [];
+
+  uniqueNames.forEach(name => {
+    let hasAppeared = false;
+    const sequence = [];
+    
+    sortedMeetingKeys.forEach(mk => {
+      const mMember = meetingResults[mk].find(m => bestMatch(m.name, [name]) === name);
+      if (mMember) {
+        hasAppeared = true;
+        if (mMember.attendance === 'A') {
+          sequence.push('A');
+        } else {
+          sequence.push('P');
+        }
+      } else {
+        if (hasAppeared) {
+          sequence.push('A');
+        }
+      }
+    });
+
+    // Max consecutive absences
+    let maxConsecutive = 0;
+    let currentConsecutive = 0;
+    sequence.forEach(status => {
+      if (status === 'A') {
+        currentConsecutive++;
+        if (currentConsecutive > maxConsecutive) {
+          maxConsecutive = currentConsecutive;
+        }
+      } else {
+        currentConsecutive = 0;
+      }
+    });
+
+    // Total absences
+    const totalAbsents = sequence.filter(status => status === 'A').length;
+
+    if (maxConsecutive >= 3) {
+      consecutiveAlerts.push({ name, count: maxConsecutive });
+    }
+    if (totalAbsents >= 6) {
+      totalAlerts.push({ name, count: totalAbsents });
+    }
+  });
+
+  return { consecutive: consecutiveAlerts, total: totalAlerts };
 }
 
 export default function App() {
   const [data, setData] = useState({});
   const [cur, setCur] = useState('overall');
+  const [remarks, setRemarks] = useState({});
   const [theme, setTheme] = useState('light');
   const [toasts, setToasts] = useState([]);
   const [activeTab, setActiveTab] = useState('lbTab');
@@ -345,10 +429,30 @@ export default function App() {
         const state = await res.json();
         setData(state.data || {});
         setCur(state.cur || 'overall');
+        setRemarks(state.remarks || {});
       }
     } catch (err) {
       console.error('Error fetching dashboard state:', err);
       toast('Failed to load data from server.', 'error');
+    }
+  };
+
+  const handleUpdateRemark = async (meetingId, name, val) => {
+    setRemarks(prev => {
+      const next = { ...prev };
+      if (!next[meetingId]) next[meetingId] = {};
+      next[meetingId][name] = val;
+      return next;
+    });
+
+    try {
+      await fetch('/api/update-remark', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meetingId, name, remark: val })
+      });
+    } catch (err) {
+      console.error('Error updating remark:', err);
     }
   };
 
@@ -583,6 +687,7 @@ export default function App() {
       if (res.ok) {
         const body = await res.json();
         setData(body.state.data || {});
+        setRemarks(body.state.remarks || {});
         toast(`Successfully loaded "${fileName}" via AI Parser`, 'success');
       } else {
         const errData = await res.json();
@@ -605,6 +710,7 @@ export default function App() {
       if (res.ok) {
         const body = await res.json();
         setData(body.state.data || {});
+        setRemarks(body.state.remarks || {});
         toast('Category updated successfully', 'success');
       }
     } catch (err) {
@@ -623,6 +729,7 @@ export default function App() {
       if (res.ok) {
         const body = await res.json();
         setData(body.state.data || {});
+        setRemarks(body.state.remarks || {});
         toast('Sheet deleted', 'info');
       }
     } catch (err) {
@@ -642,6 +749,7 @@ export default function App() {
         if (res.ok) {
           const body = await res.json();
           setData(body.state.data || {});
+          setRemarks(body.state.remarks || {});
           toast('Meeting cleared', 'warning');
         }
       } catch (err) {
@@ -657,6 +765,7 @@ export default function App() {
         if (res.ok) {
           const body = await res.json();
           setData(body.state.data || {});
+          setRemarks(body.state.remarks || {});
           toast('All data reset', 'warning');
         }
       } catch (err) {
@@ -809,6 +918,23 @@ export default function App() {
     activeFiles = data[cur] || [];
   }
 
+  const meetingKeysWithData = Object.keys(data).filter(k => data[k] && data[k].length);
+  const totalMeetingsCompleted = meetingKeysWithData.length;
+
+  const latestMeetingMemberCount = (() => {
+    if (meetingKeysWithData.length === 0) return 0;
+    const sortedKeys = [...meetingKeysWithData].sort((a, b) => {
+      const numA = parseInt(a.replace('meeting_', '')) || 0;
+      const numB = parseInt(b.replace('meeting_', '')) || 0;
+      return numB - numA;
+    });
+    const latestKey = sortedKeys[0];
+    const sheets = data[latestKey] || [];
+    const ns = new Set();
+    sheets.forEach(f => f.rows.forEach(r => ns.add(r.rawName)));
+    return ns.size;
+  })();
+
   // AGGREGATE SUMMARY NUMBERS FOR OVERALL HERO BANNER
   let overallPresent = 0, overallAbsent = 0, overallLate = 0, overallSub = 0;
   let overallRef = 0, overallBiz = 0, overallInd = 0, overallVis = 0, overallTest = 0, overallKyt = 0;
@@ -834,14 +960,50 @@ export default function App() {
     else tierRed++;
   });
 
+  if (cur === 'overall') {
+    const meetingPresents = meetingKeysWithData.map(mk => {
+      const files = data[mk] || [];
+      const meetingMembers = consolidate(files);
+      return meetingMembers.filter(m => m.attendance === 'P').length;
+    });
+    const meetingAbsents = meetingKeysWithData.map(mk => {
+      const files = data[mk] || [];
+      const meetingMembers = consolidate(files);
+      return meetingMembers.filter(m => m.attendance === 'A').length;
+    });
+    const meetingLates = meetingKeysWithData.map(mk => {
+      const files = data[mk] || [];
+      const meetingMembers = consolidate(files);
+      return meetingMembers.filter(m => m.attendance === 'L').length;
+    });
+    const meetingSubs = meetingKeysWithData.map(mk => {
+      const files = data[mk] || [];
+      const meetingMembers = consolidate(files);
+      return meetingMembers.filter(m => m.attendance === 'S').length;
+    });
+
+    overallPresent = meetingPresents.length
+      ? Math.round(meetingPresents.reduce((a, b) => a + b, 0) / meetingPresents.length)
+      : 0;
+    overallAbsent = meetingAbsents.length
+      ? Math.round(meetingAbsents.reduce((a, b) => a + b, 0) / meetingAbsents.length)
+      : 0;
+    overallLate = meetingLates.length
+      ? Math.round(meetingLates.reduce((a, b) => a + b, 0) / meetingLates.length)
+      : 0;
+    overallSub = meetingSubs.length
+      ? Math.round(meetingSubs.reduce((a, b) => a + b, 0) / meetingSubs.length)
+      : 0;
+  }
+
   const avgScore = members.length
     ? Math.round(members.reduce((a, m) => a + m.score, 0) / members.length)
     : 0;
   const topMember = members.length
     ? [...members].sort((a, b) => b.score - a.score)[0]
     : null;
-  const attRate = members.length
-    ? Math.round(overallPresent / members.length * 100)
+  const attRate = (overallPresent + overallAbsent)
+    ? Math.round((overallPresent / (overallPresent + overallAbsent)) * 100)
     : 0;
 
   // MEMBER MEETINGS MAP FOR CONSOLIDATED OVERALL TABLE
@@ -868,8 +1030,7 @@ export default function App() {
     );
   }
 
-  const meetingKeysWithData = Object.keys(data).filter(k => data[k] && data[k].length);
-  const totalMeetingsCompleted = meetingKeysWithData.length;
+
 
   return (
     <>
@@ -1052,7 +1213,7 @@ export default function App() {
                 <div className="ov-stats-grid">
                   {[
                     { icon: 'fa-calendar-days', val: totalMeetingsCompleted, lbl: 'Meetings done', sub: `of ${TOTAL_MEETINGS} planned`, color: 'var(--pri)', pct: Math.round((totalMeetingsCompleted / TOTAL_MEETINGS) * 100) },
-                    { icon: 'fa-users', val: members.length, lbl: 'Unique members', sub: 'across all meetings', color: 'var(--sec)', pct: 100 },
+                    { icon: 'fa-users', val: latestMeetingMemberCount, lbl: 'Latest Meeting Count', sub: 'members in latest meeting', color: 'var(--sec)', pct: 100 },
                     { icon: 'fa-user-check', val: overallPresent, lbl: 'Total present', sub: `${attRate}% rate · ${overallAbsent} absent`, color: 'var(--ok)', pct: attRate },
                     { icon: 'fa-clock-rotate-left', val: overallLate, lbl: 'Late arrivals', sub: `${overallSub} substitutes`, color: 'var(--warn)', pct: members.length ? Math.round((overallLate / members.length) * 100) : 0 },
                     { icon: 'fa-handshake', val: overallRef, lbl: 'Total referrals', sub: 'given across meetings', color: 'var(--sec)', pct: Math.min(100, overallRef * 5) },
@@ -1061,7 +1222,6 @@ export default function App() {
                     { icon: 'fa-eye', val: overallVis, lbl: 'Visitors', sub: 'brought to meetings', color: 'var(--warn)', pct: Math.min(100, overallVis * 5) },
                     { icon: 'fa-star', val: overallTest, lbl: 'Testimonials', sub: 'total given', color: 'var(--danger)', pct: Math.min(100, overallTest * 5) },
                     { icon: 'fa-brain', val: overallKyt, lbl: 'KYT done', sub: members.length ? `${Math.round((overallKyt / members.length) * 100)}% completion` : '', color: 'var(--ok)', pct: members.length ? Math.round((overallKyt / members.length) * 100) : 0 },
-                    { icon: 'fa-chart-line', val: `${avgScore}pts`, lbl: 'Avg score', sub: topMember ? `Best: ${topMember.score}pts` : '', color: 'var(--pri)', pct: Math.min(100, avgScore) },
                   ].map((s, idx) => (
                     <div key={idx} className="ov-scard">
                       <i className={`fa-solid ${s.icon} ov-scard-icon`} style={{ color: s.color }}></i>
@@ -1132,6 +1292,129 @@ export default function App() {
                 </div>
               </div>
 
+              {/* Attendance Alerts */}
+              {(() => {
+                const alerts = computeAbsenceAlerts(data);
+                const hasAlerts = alerts.consecutive.length > 0 || alerts.total.length > 0;
+                return (
+                  <div className="ov-section" style={{ marginTop: '20px' }}>
+                    <div className="ov-sec-hdr" style={{ marginBottom: '14px' }}>
+                      <div className="ov-sec-title">
+                        <i className="fa-solid fa-triangle-exclamation" style={{ color: 'var(--err, #dc3545)' }}></i> Attendance Alerts & Warnings
+                      </div>
+                      <span style={{ fontSize: '.78rem', color: 'var(--muted)' }}>
+                        System triggers for members needing attendance intervention.
+                      </span>
+                    </div>
+
+                    {!hasAlerts ? (
+                      <div style={{
+                        padding: '16px 20px',
+                        background: 'rgba(40, 167, 69, 0.08)',
+                        border: '1px solid rgba(40, 167, 69, 0.25)',
+                        borderRadius: 'var(--rmd)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        color: '#28a745',
+                        fontWeight: 600
+                      }}>
+                        <i className="fa-solid fa-circle-check" style={{ fontSize: '1.2rem' }}></i>
+                        All members are in good standing! No warning thresholds (3 consecutive or 6 total absences) reached.
+                      </div>
+                    ) : (
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                        gap: '16px'
+                      }}>
+                        {/* 3+ Consecutive Absences */}
+                        <div className="gc" style={{
+                          padding: '16px',
+                          border: '1px solid rgba(220, 53, 69, 0.2)',
+                          background: 'rgba(220, 53, 69, 0.02)',
+                          borderRadius: 'var(--rmd)'
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            color: '#dc3545',
+                            fontWeight: 700,
+                            marginBottom: '12px',
+                            fontSize: '.95rem'
+                          }}>
+                            <i className="fa-solid fa-circle-exclamation"></i>
+                            3+ Consecutive Absences ({alerts.consecutive.length})
+                          </div>
+                          {alerts.consecutive.length === 0 ? (
+                            <div style={{ fontSize: '.85rem', color: 'var(--muted)' }}>No members in this category.</div>
+                          ) : (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {alerts.consecutive.map((a, i) => (
+                                <div key={i} style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  padding: '8px 12px',
+                                  background: 'var(--ibg)',
+                                  borderRadius: 'var(--rxs)',
+                                  fontSize: '.85rem',
+                                  border: '1px solid var(--bdr)'
+                                }}>
+                                  <strong>{a.name}</strong>
+                                  <span style={{ color: '#dc3545', fontWeight: 600 }}>{a.count} consecutive absent</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* 6+ Total Absences */}
+                        <div className="gc" style={{
+                          padding: '16px',
+                          border: '1px solid rgba(253, 126, 20, 0.2)',
+                          background: 'rgba(253, 126, 20, 0.02)',
+                          borderRadius: 'var(--rmd)'
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            color: '#fd7e14',
+                            fontWeight: 700,
+                            marginBottom: '12px',
+                            fontSize: '.95rem'
+                          }}>
+                            <i className="fa-solid fa-triangle-exclamation"></i>
+                            6+ Total Absences ({alerts.total.length})
+                          </div>
+                          {alerts.total.length === 0 ? (
+                            <div style={{ fontSize: '.85rem', color: 'var(--muted)' }}>No members in this category.</div>
+                          ) : (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {alerts.total.map((a, i) => (
+                                <div key={i} style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  padding: '8px 12px',
+                                  background: 'var(--ibg)',
+                                  borderRadius: 'var(--rxs)',
+                                  fontSize: '.85rem',
+                                  border: '1px solid var(--bdr)'
+                                }}>
+                                  <strong>{a.name}</strong>
+                                  <span style={{ color: '#fd7e14', fontWeight: 600 }}>{a.count} total absent</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               {/* Visual analytics */}
               <div className="ov-section">
                 <div className="ov-sec-hdr">
@@ -1196,12 +1479,13 @@ export default function App() {
                         <th>Testimonials</th>
                         <th>Total score</th>
                         <th>Tier</th>
+                        <th>Remarks</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredOverallMembers.length === 0 ? (
                         <tr>
-                          <td colSpan={12} style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px' }}>
+                          <td colSpan={13} style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px' }}>
                             No members found.
                           </td>
                         </tr>
@@ -1240,6 +1524,25 @@ export default function App() {
                               <td>{m.testimonials}</td>
                               <td><span className={`sbadge ${scoreClass}`}>{m.score}</span></td>
                               <td>{tierPill}</td>
+                              <td>
+                                <input
+                                  type="text"
+                                  value={remarks[cur]?.[m.name] || ''}
+                                  onChange={(e) => handleUpdateRemark(cur, m.name, e.target.value)}
+                                  placeholder="Type remark..."
+                                  className="remarks-input"
+                                  style={{
+                                    border: '1px solid var(--bdr)',
+                                    borderRadius: 'var(--rxs)',
+                                    padding: '4px 8px',
+                                    background: 'var(--ibg)',
+                                    color: 'var(--txt)',
+                                    fontSize: '.85rem',
+                                    width: '100%',
+                                    minWidth: '150px'
+                                  }}
+                                />
+                              </td>
                             </tr>
                           );
                         })
@@ -1460,7 +1763,8 @@ export default function App() {
                             { key: 'inductions', label: 'Inductions' },
                             { key: 'visitors', label: 'Visitors' },
                             { key: 'testimonials', label: 'Testimonials' },
-                            { key: 'score', label: 'Total Score' }
+                            { key: 'score', label: 'Total Score' },
+                            { key: 'remarks', label: 'Remarks' }
                           ].map(col => {
                             const isSorted = sb === col.key;
                             const sortIcon = isSorted
@@ -1508,7 +1812,7 @@ export default function App() {
                       <tbody>
                         {paginatedMembers.length === 0 ? (
                           <tr>
-                            <td colSpan={9} style={{ textAlign: 'center', color: 'var(--muted)', padding: '32px' }}>
+                            <td colSpan={10} style={{ textAlign: 'center', color: 'var(--muted)', padding: '32px' }}>
                               No records found.
                             </td>
                           </tr>
@@ -1526,6 +1830,25 @@ export default function App() {
                                 <td>{m.visitors}</td>
                                 <td>{m.testimonials}</td>
                                 <td><span className={`sbadge ${scoreClass}`}>{m.score}</span></td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    value={remarks[cur]?.[m.name] || ''}
+                                    onChange={(e) => handleUpdateRemark(cur, m.name, e.target.value)}
+                                    placeholder="Type remark..."
+                                    className="remarks-input"
+                                    style={{
+                                      border: '1px solid var(--bdr)',
+                                      borderRadius: 'var(--rxs)',
+                                      padding: '4px 8px',
+                                      background: 'var(--ibg)',
+                                      color: 'var(--txt)',
+                                      fontSize: '.85rem',
+                                      width: '100%',
+                                      minWidth: '150px'
+                                    }}
+                                  />
+                                </td>
                               </tr>
                             );
                           })

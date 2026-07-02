@@ -1040,6 +1040,7 @@
 
       <!-- TAB 1: Leaderboard View -->
       <div id="leaderboardTab" class="tab-panel active">
+        <div id="attendanceAlertsSection"></div>
         <div class="leaderboard-grid">
           <div class="glass-card leaderboard-card">
             <div class="leaderboard-header">
@@ -1170,6 +1171,7 @@
       theme: 'light',
       uploadedFiles: [], // Array of { id, name, category, count, headers: [], rows: [] }
       members: [],       // Consolidated rows
+      remarks: {},       // Member remarks
       tableSettings: {
         searchQuery: '',
         sortBy: 'score',
@@ -1193,40 +1195,38 @@
     // Theme Handlers
     function loadTheme() {
       const savedTheme = localStorage.getItem('bni_leaderboard_theme') || 'light';
-      setTheme(savedTheme);
-    }
-
-    function setTheme(theme) {
-      state.theme = theme;
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('bni_leaderboard_theme', theme);
-
-      const themeIcon = document.getElementById('themeIcon');
-      if (theme === 'dark') {
-        themeIcon.className = 'fa-solid fa-sun';
-      } else {
-        themeIcon.className = 'fa-solid fa-moon';
-      }
-
-      if (state.members.length > 0) {
-        renderCharts();
-      }
+      state.theme = savedTheme;
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeButton();
     }
 
     function toggleTheme() {
-      setTheme(state.theme === 'light' ? 'dark' : 'light');
+      const theme = state.theme === 'light' ? 'dark' : 'light';
+      state.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('bni_leaderboard_theme', theme);
+      updateThemeButton();
     }
 
-    // Toast Alerts
+    function updateThemeButton() {
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) {
+        btn.innerHTML = state.theme === 'light'
+          ? '<i class="fa-solid fa-moon"></i>'
+          : '<i class="fa-solid fa-sun"></i>';
+      }
+    }
+
+    // Toast alerts
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
+      toast.className = `toast ${type}`;
 
-      let icon = 'fa-info-circle';
+      let icon = 'fa-circle-info';
       if (type === 'success') icon = 'fa-circle-check';
-      if (type === 'error') icon = 'fa-circle-exclamation';
-      if (type === 'warning') icon = 'fa-triangle-exclamation';
+      else if (type === 'error') icon = 'fa-circle-xmark';
+      else if (type === 'warning') icon = 'fa-triangle-exclamation';
 
       toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
       container.appendChild(toast);
@@ -1245,6 +1245,7 @@
         try {
           const parsed = JSON.parse(savedState);
           state.uploadedFiles = parsed.uploadedFiles || [];
+          state.remarks = parsed.remarks || {};
         } catch (e) {
           console.error("Error parsing saved state", e);
         }
@@ -1253,9 +1254,18 @@
 
     function saveStateToStorage() {
       const payload = {
-        uploadedFiles: state.uploadedFiles
+        uploadedFiles: state.uploadedFiles,
+        remarks: state.remarks || {}
       };
       localStorage.setItem('bni_leaderboard_state', JSON.stringify(payload));
+    }
+
+    function updateStandaloneRemark(name, value) {
+      if (!state.remarks) {
+        state.remarks = {};
+      }
+      state.remarks[name] = value;
+      saveStateToStorage();
     }
 
     function triggerFileInput() {
@@ -1928,7 +1938,8 @@
         { key: 'inductions', label: 'Inductions', type: 'number' },
         { key: 'visitors', label: 'Visitors', type: 'number' },
         { key: 'testimonials', label: 'Testimonials', type: 'number' },
-        { key: 'score', label: 'Total Score', type: 'number' }
+        { key: 'score', label: 'Total Score', type: 'number' },
+        { key: 'remarks', label: 'Remarks', type: 'string' }
       ];
 
       const headersRow = document.getElementById('tableHeaders');
@@ -1978,6 +1989,8 @@
         if (m.score >= 60) scoreClass = 'score-high';
         else if (m.score >= 30) scoreClass = 'score-med';
 
+        const remarkVal = (state.remarks && state.remarks[m.name]) || '';
+
         tr.innerHTML = `
           <td><strong>${m.name}</strong></td>
           <td>${m.kyt}</td>
@@ -1988,6 +2001,9 @@
           <td>${m.visitors}</td>
           <td>${m.testimonials}</td>
           <td><span class="score-badge ${scoreClass}">${m.score}</span></td>
+          <td>
+            <input type="text" value="${remarkVal}" placeholder="Type remark..." oninput="updateStandaloneRemark('${m.name}', this.value)" style="border: 1px solid var(--border-color); border-radius: var(--radius-xs); padding: 4px 8px; background-color: var(--input-bg); color: var(--text-main); font-size: .85rem; width: 100%; min-width: 150px;">
+          </td>
         `;
         body.appendChild(tr);
       });
@@ -2111,10 +2127,167 @@
       renderMasterTable();
     }
 
+    function computeStandaloneAbsenceAlerts() {
+      const attendanceFiles = state.uploadedFiles
+        .filter(f => f.category === 'attendance')
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+      if (attendanceFiles.length === 0) return { consecutive: [], total: [] };
+
+      // Collect all unique names across all files
+      const allNamesSet = new Set();
+      state.uploadedFiles.forEach(file => {
+        file.rows.forEach(r => allNamesSet.add(r.rawName));
+      });
+      const allNames = Array.from(allNamesSet);
+      const uniqueNames = [];
+      allNames.forEach(name => {
+        const matched = findBestMemberMatch(name, uniqueNames);
+        if (!matched) uniqueNames.push(name);
+      });
+
+      const consecutiveAlerts = [];
+      const totalAlerts = [];
+
+      uniqueNames.forEach(name => {
+        let hasAppeared = false;
+        const sequence = [];
+
+        attendanceFiles.forEach(file => {
+          const row = file.rows.find(r => findBestMemberMatch(r.rawName, [name]) === name);
+          if (row) {
+            hasAppeared = true;
+            // Find status key
+            const valKeys = Object.keys(row).filter(k => k !== 'rawName');
+            const statusKey = valKeys.find(k => k.toLowerCase().includes('attendance') || k.toLowerCase().includes('status') || k.toLowerCase().includes('present') || k.toLowerCase().includes('value')) || valKeys[0];
+            let isAbsent = false;
+            if (statusKey) {
+              const status = String(row[statusKey]).trim().toUpperCase();
+              if (status.startsWith('A')) {
+                isAbsent = true;
+              }
+            }
+            if (isAbsent) {
+              sequence.push('A');
+            } else {
+              sequence.push('P');
+            }
+          } else {
+            if (hasAppeared) {
+              sequence.push('A');
+            }
+          }
+        });
+
+        // Max consecutive absences
+        let maxConsecutive = 0;
+        let currentConsecutive = 0;
+        sequence.forEach(status => {
+          if (status === 'A') {
+            currentConsecutive++;
+            if (currentConsecutive > maxConsecutive) {
+              maxConsecutive = currentConsecutive;
+            }
+          } else {
+            currentConsecutive = 0;
+          }
+        });
+
+        // Total absences
+        const totalAbsents = sequence.filter(status => status === 'A').length;
+
+        if (maxConsecutive >= 3) {
+          consecutiveAlerts.push({ name, count: maxConsecutive });
+        }
+        if (totalAbsents >= 6) {
+          totalAlerts.push({ name, count: totalAbsents });
+        }
+      });
+
+      return { consecutive: consecutiveAlerts, total: totalAlerts };
+    }
+
     // Render Leaderboard rankings
     function renderLeaderboard() {
       const list = document.getElementById('leaderboardList');
       const members = [...state.members];
+
+      // Render Attendance Warnings
+      const alertsSec = document.getElementById('attendanceAlertsSection');
+      if (members.length === 0) {
+        alertsSec.innerHTML = '';
+      } else {
+        const alerts = computeStandaloneAbsenceAlerts();
+        const hasAlerts = alerts.consecutive.length > 0 || alerts.total.length > 0;
+        
+        if (!hasAlerts) {
+          alertsSec.innerHTML = `
+            <div style="margin-bottom: 24px; padding: 16px 20px; background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.25); border-radius: var(--radius-md); display: flex; align-items: center; gap: 12px; color: #28a745; font-weight: 600; font-size: 0.9rem;">
+              <i class="fa-solid fa-circle-check" style="font-size: 1.2rem;"></i>
+              All members are in good standing! No warning thresholds (3 consecutive or 6 total absences) reached.
+            </div>
+          `;
+        } else {
+          let consecutiveHtml = '';
+          if (alerts.consecutive.length === 0) {
+            consecutiveHtml = '<div style="font-size: .85rem; color: var(--text-muted);">No members in this category.</div>';
+          } else {
+            alerts.consecutive.forEach(a => {
+              consecutiveHtml += `
+                <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--card-bg-hover); border-radius: var(--radius-xs); border: 1px solid var(--border-color); font-size: 0.85rem; margin-bottom: 8px;">
+                  <strong>${a.name}</strong>
+                  <span style="color: #dc3545; font-weight: 600;">${a.count} consecutive absent</span>
+                </div>
+              `;
+            });
+          }
+
+          let totalHtml = '';
+          if (alerts.total.length === 0) {
+            totalHtml = '<div style="font-size: .85rem; color: var(--text-muted);">No members in this category.</div>';
+          } else {
+            alerts.total.forEach(a => {
+              totalHtml += `
+                <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--card-bg-hover); border-radius: var(--radius-xs); border: 1px solid var(--border-color); font-size: 0.85rem; margin-bottom: 8px;">
+                  <strong>${a.name}</strong>
+                  <span style="color: #fd7e14; font-weight: 600;">${a.count} total absent</span>
+                </div>
+              `;
+            });
+          }
+
+          alertsSec.innerHTML = `
+            <div class="glass-card" style="margin-bottom: 24px; padding: 20px;">
+              <div style="margin-bottom: 14px;">
+                <h3 style="display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 1.1rem; margin: 0 0 4px 0;">
+                  <i class="fa-solid fa-triangle-exclamation" style="color: #dc3545;"></i> Attendance Alerts & Warnings
+                </h3>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">
+                  System triggers for members needing attendance intervention.
+                </span>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <div style="padding: 16px; border: 1px solid rgba(220, 53, 69, 0.2); background: rgba(220, 53, 69, 0.02); border-radius: var(--radius-md);">
+                  <div style="display: flex; align-items: center; gap: 8px; color: #dc3545; font-weight: 700; margin-bottom: 12px; font-size: 0.9rem;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    3+ Consecutive Absences (${alerts.consecutive.length})
+                  </div>
+                  <div>${consecutiveHtml}</div>
+                </div>
+
+                <div style="padding: 16px; border: 1px solid rgba(253, 126, 20, 0.2); background: rgba(253, 126, 20, 0.02); border-radius: var(--radius-md);">
+                  <div style="display: flex; align-items: center; gap: 8px; color: #fd7e14; font-weight: 700; margin-bottom: 12px; font-size: 0.9rem;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    6+ Total Absences (${alerts.total.length})
+                  </div>
+                  <div>${totalHtml}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
 
       list.innerHTML = '';
       if (members.length === 0) {
