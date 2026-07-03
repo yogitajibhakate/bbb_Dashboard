@@ -306,9 +306,24 @@ function computeOverall(data) {
     });
   });
 
-  const divisor = Object.keys(meetingResults).length || 1;
+  const sortedKeys = Object.keys(meetingResults).sort((a, b) => {
+    const numA = parseInt(a.replace('meeting_', ''), 10);
+    const numB = parseInt(b.replace('meeting_', ''), 10);
+    return numA - numB;
+  });
+
   merged.forEach(rec => {
-    rec.score = Math.round(rec.score / divisor);
+    let firstIdx = sortedKeys.length - 1;
+    for (let i = 0; i < sortedKeys.length; i++) {
+      const mk = sortedKeys[i];
+      const found = meetingResults[mk].some(mMember => bestMatch(mMember.name, [rec.name]) === rec.name);
+      if (found) {
+        firstIdx = i;
+        break;
+      }
+    }
+    const memberDivisor = sortedKeys.length - firstIdx;
+    rec.score = Math.round(rec.score / (memberDivisor || 1));
   });
 
   merged.sort((a, b) => b.score - a.score);
