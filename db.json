@@ -1116,17 +1116,15 @@
           }
         ],
         "meeting": "meeting_2"
-      }
-    ],
-    "meeting_3": [
+      },
       {
-        "id": "f_1783071329264_lcivv",
+        "id": "f_1783080715864_lcwkq",
         "name": "Meeting Report From 7 May to 21 May 2026.xlsx",
-        "category": "referrals",
+        "category": "master",
         "count": 80,
         "headers": [
           "Name",
-          "Referrals Given",
+          "Referrals given inside chapter",
           "Referrals given outside chapter",
           "Business given",
           "KYT"
@@ -1134,645 +1132,566 @@
         "rows": [
           {
             "rawName": "Abishek Palimar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 120000,
             "KYT": 0
           },
           {
             "rawName": "Adithi Jois",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ajay kumar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Ajit Hegde",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 200,
             "KYT": 0
           },
           {
             "rawName": "Anand  S Kalame",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 2500,
             "KYT": 0
           },
           {
             "rawName": "Arvind R Joshi",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Ashwin Rao",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 720,
             "KYT": 0
           },
           {
             "rawName": "Avinash A",
-            "Referrals Given": 3,
+            "Referrals given inside chapter": 3,
             "Referrals given outside chapter": 0,
             "Business given": 292528,
             "KYT": 0
           },
           {
             "rawName": "B V Krishna",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 465615,
             "KYT": 0
           },
           {
             "rawName": "Brunda Ramesh",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 11200,
             "KYT": 0
           },
           {
             "rawName": "DARSHAN KAMALAKAR",
-            "Referrals Given": 2,
+            "Referrals given inside chapter": 2,
             "Referrals given outside chapter": 1,
             "Business given": 53500,
             "KYT": 1
           },
           {
             "rawName": "Deepti Natarajan",
-            "Referrals Given": 3,
+            "Referrals given inside chapter": 3,
             "Referrals given outside chapter": 0,
             "Business given": 881269,
             "KYT": 0
           },
           {
             "rawName": "Divya Rao Vashisht",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 0
           },
           {
             "rawName": "Dr.RAJESH",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Dr.Sudha Kanchi",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 57500,
             "KYT": 0
           },
           {
             "rawName": "GANAPATHI BHAT",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 25000,
             "KYT": 0
           },
           {
             "rawName": "Gopalkrishna Nittur",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 16196,
             "KYT": 1
           },
           {
             "rawName": "Gurudutt R",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 27500,
             "KYT": 3
           },
           {
             "rawName": "Guruprasad U",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 466249,
             "KYT": 0
           },
           {
             "rawName": "JAYANTH.B",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Jayaram N",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 300000,
             "KYT": 0
           },
           {
             "rawName": "K P Vilas",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 8
           },
           {
             "rawName": "Kiran N",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 11500,
             "KYT": 1
           },
           {
             "rawName": "Manjunath MS",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Mohan K",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 395000,
             "KYT": 0
           },
           {
             "rawName": "Muralidhar Rao K J",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1027855,
             "KYT": 0
           },
           {
             "rawName": "Nagaraj Hebbar",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 150000,
             "KYT": 0
           },
           {
             "rawName": "Nagaraj Herur",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Nagarathna Bhat",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 10000,
             "KYT": 2
           },
           {
             "rawName": "Naveen Hegde",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 7500,
             "KYT": 0
           },
           {
             "rawName": "Nithin Muralidhar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 31000,
             "KYT": 0
           },
           {
             "rawName": "Pallavi K G",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 58600,
             "KYT": 0
           },
           {
             "rawName": "Pavan Anant Naganur",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 5510000,
             "KYT": 0
           },
           {
             "rawName": "Pavan Hebbar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 122478,
             "KYT": 0
           },
           {
             "rawName": "Pavana",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Pavana Kumar B R",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 374940,
             "KYT": 0
           },
           {
             "rawName": "Prakash Bhat N",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 3000,
             "KYT": 0
           },
           {
             "rawName": "Prasad S N",
-            "Referrals Given": 3,
+            "Referrals given inside chapter": 3,
             "Referrals given outside chapter": 0,
             "Business given": 135388,
             "KYT": 0
           },
           {
             "rawName": "Radhakrishna K S",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 97000,
             "KYT": 0
           },
           {
             "rawName": "RAGHAVENDRA ACHAR",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 13250,
             "KYT": 0
           },
           {
             "rawName": "Raghavendra Kulkarni",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Rajitha R",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 2
           },
           {
             "rawName": "Rakshitha Dutt",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 14240,
             "KYT": 0
           },
           {
             "rawName": "RAM PRASAD V K",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ramakrishna Hegde",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Ramesh Jois P",
-            "Referrals Given": 7,
+            "Referrals given inside chapter": 7,
             "Referrals given outside chapter": 0,
             "Business given": 15190,
             "KYT": 0
           },
           {
             "rawName": "Ravi Kumar G - Patron Member",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 25193,
             "KYT": 0
           },
           {
             "rawName": "Ravikumar T R",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 600,
             "KYT": 0
           },
           {
             "rawName": "Richa Khandelwal Bhat",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Rohan R",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 1
           },
           {
             "rawName": "Satyaram Bhat",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 100600,
             "KYT": 0
           },
           {
             "rawName": "Shankaranarayan Hiregange",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 35000,
             "KYT": 0
           },
           {
             "rawName": "Shashi Nadig",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 750,
             "KYT": 3
           },
           {
             "rawName": "Shashibhushan Hegde",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 3
           },
           {
             "rawName": "Shobha.H",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 6000,
             "KYT": 0
           },
           {
             "rawName": "Shruthi Pavan Hebbar",
-            "Referrals Given": 2,
+            "Referrals given inside chapter": 2,
             "Referrals given outside chapter": 0,
             "Business given": 27000,
             "KYT": 0
           },
           {
             "rawName": "SHRUTHI RAGHAVENDRA ACHAR",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Shyam Sunder Rao",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Shyama Sagar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 12960,
             "KYT": 0
           },
           {
             "rawName": "Shylesh S. Pattavardhan",
-            "Referrals Given": 2,
+            "Referrals given inside chapter": 2,
             "Referrals given outside chapter": 1,
             "Business given": 32000,
             "KYT": 1
           },
           {
             "rawName": "Soumya H S",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sree Nikhil B",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sridhar Nagarajan",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 24000,
             "KYT": 0
           },
           {
             "rawName": "Srikanth Prabhu",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1455,
             "KYT": 0
           },
           {
             "rawName": "Srinath K C",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 1500000,
             "KYT": 0
           },
           {
             "rawName": "Srinivasan Malnad",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 13389,
             "KYT": 0
           },
           {
             "rawName": "Sudarshan B R",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sudarshan B S",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Sudhir R",
-            "Referrals Given": 1,
+            "Referrals given inside chapter": 1,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Swaroop Suryanarayana",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Swathy P",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 450,
             "KYT": 1
           },
           {
             "rawName": "Udaya Bhaskar",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 1500,
             "KYT": 1
           },
           {
             "rawName": "Vaarija Srinivas",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 2
           },
           {
             "rawName": "Vadiraja Samaga",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 5000,
             "KYT": 0
           },
           {
             "rawName": "Varadharaj Rao",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinay Kumar Swamy",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinay Sharma",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinayak Hegde",
-            "Referrals Given": 2,
+            "Referrals given inside chapter": 2,
             "Referrals given outside chapter": 0,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Vinod Bhat",
-            "Referrals Given": 0,
+            "Referrals given inside chapter": 0,
             "Referrals given outside chapter": 1,
             "Business given": 0,
             "KYT": 0
           },
           {
             "rawName": "Yadiyala S L",
-            "Referrals Given": 2,
+            "Referrals given inside chapter": 2,
             "Referrals given outside chapter": 0,
             "Business given": 173788,
             "KYT": 0
           }
         ],
-        "meeting": "meeting_3"
-      }
-    ],
-    "meeting_4": [
-      {
-        "id": "f_1783071339081_m4bsh",
-        "name": "KYT done - Sheet1 (1).csv",
-        "category": "kyt",
-        "count": 16,
-        "headers": [
-          "Member Name",
-          "KYT Done"
-        ],
-        "rows": [
-          {
-            "rawName": "Abishek Palimar",
-            "KYT Done": "3"
-          },
-          {
-            "rawName": "Adithi Jois",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Ajay Kumar",
-            "KYT Done": "1"
-          },
-          {
-            "rawName": "Ajit Hegde",
-            "KYT Done": "2"
-          },
-          {
-            "rawName": "Anand S Kalame",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Arvind R Joshi",
-            "KYT Done": "1"
-          },
-          {
-            "rawName": "Ashwin Rao",
-            "KYT Done": "3"
-          },
-          {
-            "rawName": "Avinash A",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "B V Krishna",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Brunda Ramesh",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "DARSHAN KAMALAKAR",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Deepti Natarajan",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Divya Rao Vashisht",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Dr. Sudha Kanchi",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "GANAPATI BHAT",
-            "KYT Done": "0"
-          },
-          {
-            "rawName": "Seema",
-            "KYT Done": "2"
-          }
-        ],
-        "meeting": "meeting_4"
+        "meeting": "meeting_2"
       }
     ]
   },
