@@ -175,8 +175,9 @@ app.post('/api/upload-sheet', async (req, res) => {
         let parsedSchema = null;
 
         if (groq) {
-            // Send the first 25 rows to Groq LLM for schema detection
-            const systemPrompt = `You are a high-precision BNI spreadsheet schema detector.
+            try {
+                // Send the first 25 rows to Groq LLM for schema detection
+                const systemPrompt = `You are a high-precision BNI spreadsheet schema detector.
 You will be given a spreadsheet parsed as a 2D JSON array (first 25 rows) along with the file name.
 Your task is to identify:
 1. The spreadsheet's data category. It must be exactly one of: "master", "attendance", "kyt", "referrals", "business", "inductions", "visitors", "testimonials", "bbp".
@@ -193,25 +194,31 @@ Return ONLY a JSON object in this format:
 }
 Return raw JSON ONLY. No explanation, no markdown blocks.`;
 
-            const sampleRows = rawRows.slice(0, 25);
-            const userPrompt = `File Name: "${fileName}"\n\nSpreadsheet Data (First 25 rows):\n${JSON.stringify(sampleRows)}`;
+                const sampleRows = rawRows.slice(0, 25);
+                const userPrompt = `File Name: "${fileName}"\n\nSpreadsheet Data (First 25 rows):\n${JSON.stringify(sampleRows)}`;
 
-            const response = await groq.chat.completions.create({
-                model: 'llama-3.3-70b-versatile',
-                response_format: { type: 'json_object' },
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: userPrompt }
-                ],
-                temperature: 0.1
-            });
+                const response = await groq.chat.completions.create({
+                    model: 'llama-3.3-70b-versatile',
+                    response_format: { type: 'json_object' },
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    temperature: 0.1
+                });
 
-            const content = response.choices[0].message.content.trim();
-            parsedSchema = JSON.parse(content);
-            console.log(`Detected schema for ${fileName}:`, parsedSchema);
-        } else {
+                const content = response.choices[0].message.content.trim();
+                parsedSchema = JSON.parse(content);
+                console.log(`Detected schema for ${fileName}:`, parsedSchema);
+            } catch (groqErr) {
+                console.error('Groq schema detection failed, falling back to programmatic detector:', groqErr);
+                parsedSchema = null;
+            }
+        }
+
+        if (!parsedSchema) {
             // Fallback schema detection (Mock)
-            console.warn('No Groq key provided. Running basic rule-based detector.');
+            console.warn('Running basic rule-based detector.');
             const lowerFileName = fileName.toLowerCase();
             let category = 'master';
             if (lowerFileName.includes('attendance')) category = 'attendance';
