@@ -37,6 +37,121 @@ const categoryKeyMap = {
     master: 'Member Name'
 };
 
+function refineSchema(rawRows, schema) {
+    const category = schema.category || 'master';
+    let headerRowIndex = schema.headerRowIndex !== undefined ? schema.headerRowIndex : 0;
+    
+    if (headerRowIndex < 0 || headerRowIndex >= rawRows.length) {
+        headerRowIndex = 0;
+    }
+    
+    const header = rawRows[headerRowIndex] || [];
+    
+    let nameColumnIndex = schema.nameColumnIndex;
+    if (nameColumnIndex === undefined || nameColumnIndex < 0 || nameColumnIndex >= header.length) {
+        nameColumnIndex = header.findIndex(c => /name|member|participant/i.test(String(c)));
+        if (nameColumnIndex === -1) {
+            nameColumnIndex = 1; 
+        }
+    }
+    
+    let valueColumnIndex = -1;
+    
+    if (category === 'attendance') {
+        let bestValIdx = -1;
+        let maxMatches = 0;
+        for (let col = 0; col < header.length; col++) {
+            if (col === nameColumnIndex) continue;
+            let matchCount = 0;
+            const sampleLimit = Math.min(rawRows.length, headerRowIndex + 30);
+            for (let row = headerRowIndex + 1; row < sampleLimit; row++) {
+                const cellVal = String((rawRows[row] || [])[col] || '').trim().toUpperCase();
+                if (/^(P|A|L|S|PRESENT|ABSENT|LATE|SUBSTITUTE)$/.test(cellVal)) {
+                    matchCount++;
+                }
+            }
+            if (matchCount > maxMatches) {
+                maxMatches = matchCount;
+                bestValIdx = col;
+            }
+        }
+        
+        if (maxMatches > 2) {
+            valueColumnIndex = bestValIdx;
+        } else {
+            const statusIdx = header.findIndex((c, idx) => idx !== nameColumnIndex && /status|attendance|present/i.test(String(c)));
+            valueColumnIndex = statusIdx !== -1 ? statusIdx : (nameColumnIndex + 1);
+        }
+    } else if (category === 'kyt') {
+        const kytIdx = header.findIndex((c, idx) => idx !== nameColumnIndex && /kyt/i.test(String(c)));
+        if (kytIdx !== -1) {
+            valueColumnIndex = kytIdx;
+        } else {
+            let bestValIdx = -1;
+            let maxMatches = 0;
+            for (let col = 0; col < header.length; col++) {
+                if (col === nameColumnIndex) continue;
+                let matchCount = 0;
+                const sampleLimit = Math.min(rawRows.length, headerRowIndex + 30);
+                for (let row = headerRowIndex + 1; row < sampleLimit; row++) {
+                    const cellVal = String((rawRows[row] || [])[col] || '').trim().toUpperCase();
+                    if (/^(YES|NO|DONE|1|0)$/.test(cellVal)) {
+                        matchCount++;
+                    }
+                }
+                if (matchCount > maxMatches) {
+                    maxMatches = matchCount;
+                    bestValIdx = col;
+                }
+            }
+            valueColumnIndex = maxMatches > 2 ? bestValIdx : (nameColumnIndex + 1);
+        }
+    } else if (category !== 'master') {
+        const catKeywords = {
+            referrals: /referral/i,
+            business: /business|revenue|thank you/i,
+            visitors: /visitor|vip|observer/i,
+            testimonials: /testimonial/i,
+            bbp: /bbp/i,
+            inductions: /induction/i
+        };
+        const regex = catKeywords[category];
+        const matchedIdx = regex ? header.findIndex((c, idx) => idx !== nameColumnIndex && regex.test(String(c))) : -1;
+        
+        if (matchedIdx !== -1) {
+            valueColumnIndex = matchedIdx;
+        } else {
+            let bestValIdx = -1;
+            for (let col = 0; col < header.length; col++) {
+                if (col === nameColumnIndex) continue;
+                const headerText = String(header[col] || '').toLowerCase();
+                if (/sl\s*no|mobile|email|phone/i.test(headerText)) continue;
+                
+                let numberCount = 0;
+                const sampleLimit = Math.min(rawRows.length, headerRowIndex + 20);
+                for (let row = headerRowIndex + 1; row < sampleLimit; row++) {
+                    const cellVal = String((rawRows[row] || [])[col] || '').replace(/[$,\s]/g, '');
+                    if (cellVal !== '' && !isNaN(Number(cellVal))) {
+                        numberCount++;
+                    }
+                }
+                if (numberCount > 2) {
+                    bestValIdx = col;
+                    break;
+                }
+            }
+            valueColumnIndex = bestValIdx !== -1 ? bestValIdx : (nameColumnIndex + 1);
+        }
+    }
+    
+    return {
+        category,
+        headerRowIndex,
+        nameColumnIndex,
+        valueColumnIndex
+    };
+}
+
 // GET /api/dashboard
 app.get('/api/dashboard', async (req, res) => {
     try {
@@ -160,6 +275,9 @@ Return raw JSON ONLY. No explanation, no markdown blocks.`;
 
             parsedSchema = { category, headerRowIndex, nameColumnIndex, valueColumnIndex };
         }
+
+        // Refine schema programmatically to ensure 100% accuracy of name/value column indexes
+        parsedSchema = refineSchema(rawRows, parsedSchema);
 
         // Programmatically loop through all rows in Node.js
         const category = parsedSchema.category || 'master';

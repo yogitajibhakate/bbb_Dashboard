@@ -31,7 +31,7 @@ async function getDashboardData() {
     if (client && collection) {
         try {
             const doc = await collection.findOne({ _id: 'main' });
-            if (doc) return { data: doc.data || {}, cur: doc.cur || 'overall' };
+            if (doc) return { data: doc.data || {}, cur: doc.cur || 'overall', remarks: doc.remarks || {} };
         } catch (err) {
             console.error('Error loading from MongoDB:', err);
         }
@@ -46,7 +46,7 @@ async function getDashboardData() {
             console.error('Error reading local db.json:', err);
         }
     }
-    return { data: {}, cur: 'overall' };
+    return { data: {}, cur: 'overall', remarks: {} };
 }
 
 async function saveDashboardData(state) {
@@ -54,7 +54,7 @@ async function saveDashboardData(state) {
         try {
             await collection.updateOne(
                 { _id: 'main' },
-                { $set: { data: state.data || {}, cur: state.cur || 'overall' } },
+                { $set: { data: state.data || {}, cur: state.cur || 'overall', remarks: state.remarks || {} } },
                 { upsert: true }
             );
             return;
