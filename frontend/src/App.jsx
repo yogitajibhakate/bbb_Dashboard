@@ -277,7 +277,7 @@ function computeOverall(data) {
     _meetingCount: 0
   }));
 
-  Object.values(meetingResults).forEach(meetingMembers => {
+  Object.entries(meetingResults).forEach(([mk, meetingMembers]) => {
     meetingMembers.forEach(mMember => {
       const canonName = bestMatch(mMember.name, uniqueNames);
       if (!canonName) return;
@@ -303,27 +303,21 @@ function computeOverall(data) {
 
       rec.score += mMember.score;
       rec._meetingCount++;
+
+      // Track the first meeting appearance number
+      const numCurrent = parseInt(mk.replace('meeting_', ''), 10);
+      if (!rec._firstMeetingNum || numCurrent < rec._firstMeetingNum) {
+        rec._firstMeetingNum = numCurrent;
+      }
     });
   });
 
-  const sortedKeys = Object.keys(meetingResults).sort((a, b) => {
-    const numA = parseInt(a.replace('meeting_', ''), 10);
-    const numB = parseInt(b.replace('meeting_', ''), 10);
-    return numA - numB;
-  });
+  const maxMeetingNum = Math.max(...Object.keys(meetingResults).map(k => parseInt(k.replace('meeting_', ''), 10)), 0);
 
   merged.forEach(rec => {
-    let firstIdx = sortedKeys.length - 1;
-    for (let i = 0; i < sortedKeys.length; i++) {
-      const mk = sortedKeys[i];
-      const found = meetingResults[mk].some(mMember => bestMatch(mMember.name, [rec.name]) === rec.name);
-      if (found) {
-        firstIdx = i;
-        break;
-      }
-    }
-    const memberDivisor = sortedKeys.length - firstIdx;
-    rec.score = Math.round(rec.score / (memberDivisor || 1));
+    const startNum = rec._firstMeetingNum || 1;
+    const memberDivisor = maxMeetingNum >= startNum ? (maxMeetingNum - startNum + 1) : 1;
+    rec.score = Math.round(rec.score / memberDivisor);
   });
 
   merged.sort((a, b) => b.score - a.score);
